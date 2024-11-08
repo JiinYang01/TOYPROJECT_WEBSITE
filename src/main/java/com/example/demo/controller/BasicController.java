@@ -13,7 +13,7 @@ public class BasicController {
     @GetMapping("/")
     public String hi(Model model) {
         model.addAttribute("title", "사이트 제목");
-        model.addAttribute("brandName", "MyBrand");
+        model.addAttribute("brandName", "BBB");
         model.addAttribute("welcomeMessage", "사이트에 오신 것을 환영합니다");
         model.addAttribute("introMessage", "자기에게 맞는 스포츠 강좌를 알아보세요");
         model.addAttribute("customerService", "고객센터: 010-1111-0000");

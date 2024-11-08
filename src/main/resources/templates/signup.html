@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!--<html layout:decorate="~{layout}">-->
 <head>
   <meta charset="UTF-8">
   <title>회원가입</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
 
     * {
         font-family: 'Noto Sans KR', sans-serif;
@@ -17,36 +16,80 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f0f0f5;
+        background-color: #f7f7fa;
+        flex-direction: column;
+    }
+
+    .navbar-brand h1 {
+        margin: 0;
+        font-size: 48px;
+        color: #1BBC9B;
     }
 
     .container {
-        width: 300px;
-        background-color: #EEEFF1;
-        border-radius: 5px;
+        width: 320px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         text-align: center;
-        padding: 20px;
+        padding: 25px 30px;
+        margin-top: 20px;
     }
 
-    input {
+    h1 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .mb-3 {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="checkbox"] {
         width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
+        padding: 12px;
+        margin-top: 5px;
         border-radius: 5px;
-        border: none;
+        border: 1px solid #d1d1d1;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
     }
 
-    .in {
-        margin-bottom: 10px;
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        border-color: #1BBC9B;
+        outline: none;
     }
 
-    #btn, #btn1 {
+    #btn1 {
         background-color: #1BBC9B;
-        margin-bottom: 30px;
         color: white;
-        width: 100px;
-        height: 30px;
-        font-size: 15px;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+    }
+
+    #btn1:hover {
+        background-color: #17a589;
     }
 
     a {
@@ -54,17 +97,35 @@
         color: #9B9B9B;
         font-size: 12px;
     }
+
+    /* 스타일 추가 */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-container label {
+        font-size: 16px;
+        color: #555;
+        margin: 0;
+        margin-right: 10px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+    }
   </style>
 </head>
-
 <body>
+<a class="navbar-brand" th:href="@{/}"><h1>BBB</h1></a>
 
-<div layout:fragment="content" class="container my-3">
+<div class="container my-3">
   <form th:action="@{/user/register}" th:object="${userCreateForm}" method="post">
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <h1>회원가입</h1>
     <div class="mb-3">
-      <label for="email" class="form-label">email</label>
+      <label for="email" class="form-label">Email</label>
       <input type="email" th:field="*{email}" class="form-control">
     </div>
     <div class="mb-3">
@@ -79,11 +140,11 @@
       <label for="username" class="form-label">닉네임</label>
       <input type="text" th:field="*{userName}" class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 checkbox-container">
       <label for="disabled" class="form-label">장애여부</label>
       <input type="checkbox" th:field="*{disabled}" value="true" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary" id="btn1" style="width:200px;height:30px;font-size:15px;">회원가입</button>
+    <button type="submit" id="btn1">회원가입</button>
   </form>
 </div>
 </body>

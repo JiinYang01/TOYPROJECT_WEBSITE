@@ -49,7 +49,7 @@ public class UserController {
             return "signup";
         }
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
 }
