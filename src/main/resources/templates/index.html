@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Scrolling Nav - Start Bootstrap Template</title>
+    <title th:text="${title}">Scrolling Nav - Start Bootstrap Template</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <div class="container px-4">
-        <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/login_form.html">Login</a></li>
 
-            </ul>
-        </div>
-    </div>
-</nav>
+<!-- 여기에 네비게이션 추가 -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
 <!-- Header-->
 <header class="bg-primary bg-gradient text-white">
     <div class="container px-4 text-center">
-        <h1 class="fw-bolder">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
-        <p class="lead">안내: 자기에게 맞는 스포트 강좌를 ㅇㅇ사이트에서 알아보세요</p>
-        <p class="lead">고객센터: 010-0000-0000</p>
+        <h1 class="fw-bolder" th:text="${welcomeMessage}">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
+        <p class="lead" th:text="${introMessage}">안내: 자기에게 맞는 스포츠 강좌를 ㅇㅇ사이트에서 알아보세요</p>
+        <p class="lead" th:text="${customerService}">고객센터: 010-1111-0000</p>
     </div>
 </header>
 <!-- About section-->
@@ -38,23 +30,20 @@
         <div class="row gx-4 justify-content-center">
             <div class="col-lg-8">
                 <h2>About this page</h2>
-                <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+                <p class="lead" th:text="${aboutDescription}">
+                    This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for your own landing page designs! This template features:
+                </p>
                 <ul>
-                    <div class='parent'>
-                        <div class='child'>스포트 트렌드 알아보기</div>
-
-                        <div class="space">
-                        </div>
-
-                        <div class='child'>내게 맞는 스포츠 추천</div>
+                    <div class="parent">
+                        <div class="child" th:text="${feature1}">스포트 트렌드 알아보기</div>
+                        <div class="space"></div>
+                        <div class="child" th:text="${feature2}">내게 맞는 스포츠 추천</div>
                     </div>
                 </ul>
             </div>
         </div>
     </div>
 </section>
-<!-- Services section-->
-
 <!-- Footer-->
 
 </body>

@@ -1,84 +1,90 @@
-<html layout:decorate="~{layout}">
-<!--  <style>-->
-<!--    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');-->
+<!DOCTYPE html>
+<!--<html layout:decorate="~{layout}">-->
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
-<!--    * {-->
-<!--        font-family: 'Noto Sans KR', sans-serif;-->
-<!--    }-->
+    * {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
 
-<!--    body {-->
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f5;
+    }
 
-<!--    }-->
+    .container {
+        width: 300px;
+        background-color: #EEEFF1;
+        border-radius: 5px;
+        text-align: center;
+        padding: 20px;
+    }
 
-<!--    div {-->
+    input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: none;
+    }
 
-<!--        width: 300px;-->
-<!--        background-color: #EEEFF1;-->
-<!--        border-radius: 5px;-->
-<!--        text-align: center;-->
-<!--padding: 20px;-->
-<!--/* 상하좌우 정중앙 정렬하기 */-->
-<!--position: absolute;-->
-<!--top: 50%;-->
-<!--left: 40%;-->
-<!--margin: -25px 0 0 -25px;-->
+    .in {
+        margin-bottom: 10px;
+    }
 
-<!--    }-->
+    #btn, #btn1 {
+        background-color: #1BBC9B;
+        margin-bottom: 30px;
+        color: white;
+        width: 100px;
+        height: 30px;
+        font-size: 15px;
+    }
 
-<!--    input {-->
-<!--        width: 100%;-->
-<!--        padding: 10px;-->
-<!--        box-sizing: border-box;-->
-<!--        border-radius: 5px;-->
-<!--        border: none;-->
-<!--    }-->
+    a {
+        text-decoration: none;
+        color: #9B9B9B;
+        font-size: 12px;
+    }
+  </style>
+</head>
 
-<!--    .in {-->
-<!--        margin-bottom: 10px;-->
-<!--    }-->
+<body>
 
-<!--    #btn {-->
-<!--        background-color: #1BBC9B;-->
-<!--        margin-bottom: 30px;-->
-<!--        color: white;-->
-<!--    }-->
-<!--       #btn1 {-->
-<!--        background-color: #1BBC9B;-->
-<!--        margin-bottom: 30px;-->
-<!--        color: white;-->
-<!--    }-->
-
-<!--    a {-->
-<!--        text-decoration: none;-->
-<!--        color: #9B9B9B;-->
-<!--        font-size: 12px;-->
-<!--    }-->
-<!--  </style>-->
 <div layout:fragment="content" class="container my-3">
-    <form th:action="@{/user/register}" th:object="${userCreateForm}" method="post">
-      <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-      <div class="mb-3">
-        <label for="email" class="form-label">email</label>
-        <input type="email" th:field="*{email}" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label for="password1" class="form-label">비밀번호</label>
-        <input type="password" th:field="*{password1}" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label for="password2" class="form-label">비밀번호 확인</label>
-        <input type="password" th:field="*{password2}" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label for="username" class="form-label">닉네임</label>
-        <input type="text" th:field="*{userName}" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label for="diabled" class="form-label">장애여부</label>
-        <input type="checkbox" th:field="*{disabled}" value="true" class="form-control">
-      </div>
-      <button type="submit" class="btn btn-primary" id="btn1" style="width:200px;height:30px;font-size:15px;">회원가입</button>
-    </form>
+  <form th:action="@{/user/register}" th:object="${userCreateForm}" method="post">
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <h1>회원가입</h1>
+    <div class="mb-3">
+      <label for="email" class="form-label">email</label>
+      <input type="email" th:field="*{email}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="password1" class="form-label">비밀번호</label>
+      <input type="password" th:field="*{password1}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="password2" class="form-label">비밀번호 확인</label>
+      <input type="password" th:field="*{password2}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">닉네임</label>
+      <input type="text" th:field="*{userName}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="disabled" class="form-label">장애여부</label>
+      <input type="checkbox" th:field="*{disabled}" value="true" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary" id="btn1" style="width:200px;height:30px;font-size:15px;">회원가입</button>
+  </form>
 </div>
-
+</body>
 </html>

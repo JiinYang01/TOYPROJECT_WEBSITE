@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f5;
+        }
+
+        div {
+            width: 300px;
+            background-color: #EEEFF1;
+            border-radius: 5px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .in {
+            margin-bottom: 10px;
+        }
+
+        #btn, #btn1 {
+            background-color: #1BBC9B;
+            margin-bottom: 10px;
+            color: white;
+            width: 100px;
+            height: 30px;
+            font-size: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #9B9B9B;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h1>로그인</h1>
+    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+        <input type="text" placeholder="아이디" th:field="*{username}" class="in">
+        <input type="password" placeholder="비밀번호" th:field="*{password}" class="in">
+        <input type="submit" id="btn" value="로그인">
+        <input type="button" id="btn1" value="회원가입" th:onclick="|location.href='@{/register}'|">
+    </form>
+
+</div>
+</body>
+
+</html>
