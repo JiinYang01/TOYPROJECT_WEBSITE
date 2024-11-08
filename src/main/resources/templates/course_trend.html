@@ -1,0 +1,21 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+  <table class="table">
+    <thead class="table-dark">
+    <tr>
+      <th>이름</th>
+      <th>가격</th>
+      <th>카테고리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course, loop : ${courseList}">
+      <td th:text="${loop.count}"></td>
+      <td th:text="${course.courseNm}"></td>
+      <td th:text="${course.category.categoryId}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</html>
