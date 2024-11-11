@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">My First Form</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+<!--    <script src="static/hangjungdong.js"></script>-->
+    <script type="application/javascript" src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
+    <script src="static/script.js" type="text/javascript"></script>
+    <style>
+        /* Reset some default styles */
+        body, form, div, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Overall form styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            margin-top: 50px; /* Adds space above the form */
+        }
+        h2 {
+            text-align: center;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+        div {
+            margin-bottom: 15px;
+        }
+        strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        input[type="text"] {
+            width: calc(100% - 50px);
+            padding: 8px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #input2 {
+            width: calc(100% - 50px);
+        }
+        label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        /* Checkbox container styling */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .checkbox-group div {
+            flex: 1 1 30%;
+        }
+        /* Submit button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #357ab8;
+        }
+    </style>
+</head>
+<body>
+    <form th:action="@{/submitForm}" th:object="${surveyForm}" method="post">
+        <h2 th:text="${formTitle}">맞춤형 스포츠 강좌</h2>
+        <div>
+            <strong>장애인/비장애인 여부</strong>
+            <input type="radio" name="disabled" value="Abled" th:checked="${surveyForm.disabled == 'Abled'}"> 장애인
+            <input type="radio" name="disabled" value="Disabled" th:checked="${surveyForm.disabled == 'Disabled'}"> 비장애인
+        </div>
+        <div>
+            <strong>거주지역</strong>
+            <select id="sido">
+                <option value="">시도 선택</option>
+            </select>
+            <select id="sigugun">
+                <option value="">시군구 선택</option>
+            </select>
+            <select id="dong">
+                <option value="">동 선택</option>
+            </select>
+        </div>
+        <div>
+            <strong>단체/개인 스포츠 선호도</strong>
+            <input type="radio" name="groups" value="groupsports" th:checked="${surveyForm.groups == 'groupsports'}"> 단체스포츠 선호
+            <input type="radio" name="groups" value="nongroupsports" th:checked="${surveyForm.groups == 'nongroupsports'}"> 개인스포츠 선호
+        </div>
+        <div>
+            <strong>참여목적</strong>
+            <input type="text" th:field="*{parti}" placeholder="참여 목적을 입력해주세요">
+        </div>
+        <div>
+            <strong>가격 어느정도까지?</strong>
+            <input type="text" th:field="*{price}" id="input2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"> 원
+        </div>
+        <div>
+            <strong>선호 스포츠 고르기(3가지 이상)</strong>
+            <div class="checkbox-group">
+                <div th:each="sport : ${sports}">
+                    <input type="checkbox" th:field="*{preferredSports}" th:value="${sport}" th:id="${sport}">
+                    <label th:for="${sport}" th:text="${sport}">스포츠</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="submit">맞춤형강좌 알아보러가기</button>
+        </div>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            const sidoSelect = $('#sido');
+            const sigugunSelect = $('#sigugun');
+            const dongSelect = $('#dong');
+
+            // 시도 목록 추가
+            hangjungdong.sido.forEach(item => {
+                sidoSelect.append(new Option(item.codeNm, item.sido));
+            });
+
+            // 시도 변경 시 시군구 목록 업데이트
+            sidoSelect.change(function() {
+                sigugunSelect.empty().append(new Option("시군구 선택", ""));
+                dongSelect.empty().append(new Option("동 선택", ""));
+
+                const selectedSido = $(this).val();
+                const sigugunList = hangjungdong.sigugun.filter(item => item.sido === selectedSido);
+
+                sigugunList.forEach(item => {
+                    sigugunSelect.append(new Option(item.codeNm, item.sigugun));
+                });
+            });
+
+            // 시군구 변경 시 동 목록 업데이트
+            sigugunSelect.change(function() {
+                dongSelect.empty().append(new Option("동 선택", ""));
+
+                const selectedSido = sidoSelect.val();
+                const selectedSigugun = $(this).val();
+                const dongList = hangjungdong.dong.filter(item => item.sido === selectedSido && item.sigugun === selectedSigugun);
+
+                dongList.forEach(item => {
+                    dongSelect.append(new Option(item.codeNm, item.dong));
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
