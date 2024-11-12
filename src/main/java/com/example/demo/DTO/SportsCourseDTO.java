@@ -16,7 +16,7 @@ public class SportsCourseDTO {
 
     private String fcltyName;
     private String ctprvnNm;
-    private String cignguNm;
+    private String signguNm;
     private String fcltyAddr;
     private String fcltyDetailAddr;
     private String telNo;
@@ -25,13 +25,13 @@ public class SportsCourseDTO {
     private Long courseReqstNmprCo;
     private Long coursePrc;
 
-    public SportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String cignguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
+    public SportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
         this.courseId = courseId;
         this.courseNm = courseNm;
         this.category = category;
         this.fcltyName = fcltyName;
         this.ctprvnNm = ctprvnNm;
-        this.cignguNm = cignguNm;
+        this.signguNm = signguNm;
         this.fcltyAddr = fcltyAddr;
         this.fcltyDetailAddr = fcltyDetailAddr;
         this.telNo = telNo;
