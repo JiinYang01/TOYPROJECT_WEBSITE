@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Getter
 @Entity
@@ -26,5 +27,9 @@ public class User implements Serializable {
         this.password = password;
         this.userName = userName;
         this.disabled= disabled;
+    }
+
+    public Collection<Object> getRoles() {
+        return java.util.List.of();
     }
 }
