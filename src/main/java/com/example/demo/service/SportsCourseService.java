@@ -28,22 +28,4 @@ public class SportsCourseService {
         return new SportsCourseDTO(entity.getCourseId(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getCignguNm(),
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
-
-    public List<SportsCourseDTO> getCourseSortedByPriceAsc() {
-        return courseRepository.findAllByOrderByCoursePrcAsc().stream()
-                .map(this::EntityToDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<SportsCourseDTO> getCourseSortedByPriceDesc() {
-        return courseRepository.findAllByOrderByCoursePrcDesc().stream()
-                .map(this::EntityToDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<SportsCourseDTO> getCourseSortedByCourseReqstNmprCo() {
-        return courseRepository.findAllByOrderByCourseReqstNmprCoDesc().stream()
-                .map(this::EntityToDTO)
-                .collect(Collectors.toList());
-    }
 }
