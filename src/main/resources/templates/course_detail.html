@@ -1,0 +1,35 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
+<!-- 강좌 상세 정보 페이지 -->
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <!-- 강좌 이미지 또는 설명 공간 -->
+                <div class="col-md-6">
+                    <img src="path/to/course-image.jpg" class="img-fluid rounded" alt="강좌 이미지" style="width: 100%; max-height: 300px; object-fit: cover;">
+                </div>
+                <!-- 강좌 상세 정보 -->
+                <div class="col-md-6">
+                    <h5 class="card-title mt-3" th:text="${course.courseNm}">강좌명</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>센터명:</strong> <span th:text="${course.fcltyName}">센터명</span></li>
+                        <li class="list-group-item"><strong>카테고리:</strong> <span th:text="${course.category.categoryName}">카테고리</span></li>
+                        <li class="list-group-item"><strong>주소:</strong> <span th:text="${course.fcltyDetailAddr}">주소</span></li>
+                        <li class="list-group-item"><strong>전화번호:</strong> <span th:text="${course.telNo}">전화번호</span></li>
+                        <li class="list-group-item"><strong>강좌 시작일:</strong> <span th:text="${course.courseBeginDe}">시작 날짜</span></li>
+                        <li class="list-group-item"><strong>강좌 종료일:</strong> <span th:text="${course.courseEndDe}">종료 날짜</span></li>
+                        <li class="list-group-item"><strong>인원수:</strong> <span th:text="${course.courseReqstNmprCo}">인원수</span>명</li>
+                        <li class="list-group-item"><strong>가격:</strong> <span th:text="${course.coursePrc}">가격</span>원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 신청 버튼 -->
+<!--        <div class="card-footer text-center">-->
+<!--            <button class="btn btn-primary btn-lg" type="button">강좌 신청하기</button>-->
+<!--        </div>-->
+    </div>
+</div>
+</div>
+</html>
