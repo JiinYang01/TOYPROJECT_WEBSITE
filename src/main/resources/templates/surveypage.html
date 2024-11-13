@@ -19,15 +19,18 @@
         </div>
         <div>
             <strong>거주지역</strong>
-            <select id="sido">
+            <select th:field="*{sido}" id="sido">
                 <option value="">시도 선택</option>
+                <!-- Add options here -->
             </select>
-            <select id="sigugun">
+            <select th:field="*{sigugun}" id="sigugun">
                 <option value="">시군구 선택</option>
+                <!-- Add options here -->
             </select>
-            <select id="dong">
-                <option value="">동 선택</option>
-            </select>
+<!--            <select th:field="*{dong}" id="dong">-->
+<!--                <option value="">동 선택</option>-->
+<!--                &lt;!&ndash; Add options here &ndash;&gt;-->
+<!--            </select>-->
         </div>
         <div>
             <strong>단체/개인 스포츠 선호도</strong>
@@ -58,9 +61,11 @@
 
     <script>
         $(document).ready(function() {
+            console.log(hangjungdong);
+            console.log("hi");
+
             const sidoSelect = $('#sido');
             const sigugunSelect = $('#sigugun');
-            const dongSelect = $('#dong');
 
             // 시도 목록 추가
             hangjungdong.sido.forEach(item => {
@@ -70,27 +75,17 @@
             // 시도 변경 시 시군구 목록 업데이트
             sidoSelect.change(function() {
                 sigugunSelect.empty().append(new Option("시군구 선택", ""));
-                dongSelect.empty().append(new Option("동 선택", ""));
 
                 const selectedSido = $(this).val();
                 const sigugunList = hangjungdong.sigugun.filter(item => item.sido === selectedSido);
 
                 sigugunList.forEach(item => {
-                    sigugunSelect.append(new Option(item.codeNm, item.sigugun));
+                    sigugunSelect.append(new Option(item.codeNm, item.codeNm));
                 });
-            });
 
-            // 시군구 변경 시 동 목록 업데이트
-            sigugunSelect.change(function() {
-                dongSelect.empty().append(new Option("동 선택", ""));
-
-                const selectedSido = sidoSelect.val();
-                const selectedSigugun = $(this).val();
-                const dongList = hangjungdong.dong.filter(item => item.sido === selectedSido && item.sigugun === selectedSigugun);
-
-                dongList.forEach(item => {
-                    dongSelect.append(new Option(item.codeNm, item.dong));
-                });
+                const tmp = $("select[name=ctprvn] option:selected").text();
+                $("select[name=ctprvn] option:selected").attr('value', tmp);
+                console.log($(this).val());
             });
         });
     </script>

@@ -7,7 +7,7 @@ public class SurveyForm {
     private String disabled; // To store 장애인/비장애인 여부
     private String sido;      // To store 거주지역 - 시도
     private String sigugun;   // To store 거주지역 - 시군구
-    private String dong;      // To store 거주지역 - 동
+//    private String dong;      // To store 거주지역 - 동
     private String groups;    // To store 단체/개인 스포츠 선호도
     private String parti;     // To store 참여목적
     private String price;     // To store 가격
@@ -36,14 +36,6 @@ public class SurveyForm {
 
     public void setSigugun(String sigugun) {
         this.sigugun = sigugun;
-    }
-
-    public String getDong() {
-        return dong;
-    }
-
-    public void setDong(String dong) {
-        this.dong = dong;
     }
 
     public String getGroups() {
