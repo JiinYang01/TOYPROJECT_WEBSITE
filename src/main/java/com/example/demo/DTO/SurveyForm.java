@@ -2,7 +2,7 @@ package com.example.demo.DTO;
 
 import java.util.List;
 
-public class           SurveyForm {
+public class SurveyForm {
 
     private String disabled; // To store 장애인/비장애인 여부
     private String sido;      // To store 거주지역 - 시도
@@ -10,7 +10,7 @@ public class           SurveyForm {
 //    private String dong;      // To store 거주지역 - 동
     private String groups;    // To store 단체/개인 스포츠 선호도
     private String parti;     // To store 참여목적
-    private String price;     // To store 가격
+    private Long price;     // To store 가격
     private List<String> preferredSports; // To store 선호 스포츠 고르기
 
     // Getters and setters
@@ -54,11 +54,11 @@ public class           SurveyForm {
         this.parti = parti;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
