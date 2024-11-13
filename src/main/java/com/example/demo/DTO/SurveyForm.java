@@ -2,7 +2,7 @@ package com.example.demo.DTO;
 
 import java.util.List;
 
-public class SurveyForm {
+public class           SurveyForm {
 
     private String disabled; // To store 장애인/비장애인 여부
     private String sido;      // To store 거주지역 - 시도
