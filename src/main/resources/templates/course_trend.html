@@ -55,7 +55,7 @@
                         <p class="card-text text-muted" th:text="${course.category.categoryName}">Category</p>
                         <p class="card-text text-primary" th:text="'Price: ' + ${course.coursePrc} + '원'">Price</p>
                         <!-- Optional: 추가 정보 예시 -->
-                        <a href="#" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>
+                        <a th:href="@{/course/detail/{courseId}(courseId=${course.courseId})}" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>
                     </div>
                 </div>
             </div>

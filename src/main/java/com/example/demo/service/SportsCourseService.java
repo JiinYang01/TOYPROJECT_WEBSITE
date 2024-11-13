@@ -97,4 +97,11 @@ public class SportsCourseService {
 
         return courses.stream().map(this::EntityToDTO).collect(Collectors.toList());
     }
+
+    public SportsCourseDTO getCourseById(Long courseId) {
+        SportsCourse sportsCourse = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
+
+        return EntityToDTO(sportsCourse);
+    }
 }

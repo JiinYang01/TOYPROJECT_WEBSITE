@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,6 +37,18 @@ public class SportsCourseController {
         model.addAttribute("signgu", signgu);
 
         return "course_trend";
+    }
+
+    @GetMapping("/detail/{courseId}")
+    public String getCourseDetail(@PathVariable("courseId") Long courseId, Model model) {
+        // DTO를 통해 강좌 상세 정보를 가져온다.
+        SportsCourseDTO course = courseService.getCourseById(courseId);
+
+        // 모델에 강좌 정보를 추가하여 Thymeleaf 템플릿에 전달
+        model.addAttribute("course", course);
+
+        // course_detail.html로 이동
+        return "course_detail";
     }
 
 }
