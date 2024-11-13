@@ -15,14 +15,21 @@
         <!-- 지역 선택 필터 -->
         <div class="my-3">
             <h5>지역 선택</h5>
-            <div class="btn-group" role="group">
-                <select id="sido" name="ctprvn" th:value="${ctprvn}">
-                    <option value="">시도 선택</option>
-                </select>
-                <select id="sigugun" name="signgu" th:value="${signgu}">
-                    <option value="">시군구 선택</option>
-                </select>
-            </div>
+            <form th:action="@{/course/trend}" method="get" class="d-flex">
+                <div class="btn-group" role="group">
+                    <select id="sido" name="ctprvn" th:value="${ctprvn}">
+                        <option value="">시도 선택</option>
+                    </select>
+                    <select id="sigugun" name="signgu" th:value="${signgu}">
+                        <option value="">시군구 선택</option>
+                    </select>
+    <!--                <a th:href="@{/course/trend(categoryId=${selectedCategoryId}, sortType=${sortType}, ctprvn=${ctprvn}, signgu=${signgu})}"-->
+    <!--                   th:text="검색"-->
+    <!--                   class="btn">-->
+    <!--                </a>-->
+                </div>
+                <button type="submit" class="btn btn-primary">검색</button>
+            </form>
         </div>
 
         <!-- 카테고리 리스트 -->
@@ -82,8 +89,12 @@
                 const sigugunList = hangjungdong.sigugun.filter(item => item.sido === selectedSido);
 
                 sigugunList.forEach(item => {
-                    sigugunSelect.append(new Option(item.codeNm, item.sigugun));
+                    sigugunSelect.append(new Option(item.codeNm, item.codeNm));
                 });
+
+                const tmp = $("select[name=ctprvn] option:selected").text();
+                $("select[name=ctprvn] option:selected").attr('value', tmp);
+                console.log($(this).val());
             });
         });
     </script>

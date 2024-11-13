@@ -31,6 +31,8 @@ public class SportsCourseService {
     }
 
     public List<SportsCourseDTO> getFilteredCourses(Long categoryId, String sortType, String ctprvn, String signgu) {
+        System.out.println(signgu);
+
         List<SportsCourse> courses;
 
         if (categoryId != null && ctprvn == null) {
@@ -52,7 +54,7 @@ public class SportsCourseService {
             else
                 courses = courseRepository.findAll();
         } else if (categoryId != null) {
-            if (signgu == null) {
+            if (signgu == null || signgu.isEmpty()) {
                 if (sortType.equals("priceAsc"))
                     courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcAsc(categoryId, ctprvn);
                 else if (sortType.equals("priceDesc"))
@@ -72,7 +74,7 @@ public class SportsCourseService {
                     courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNm(categoryId, ctprvn, signgu);
             }
         } else {
-            if (signgu == null) {
+            if (signgu == null || signgu.isEmpty()) {
                 if (sortType.equals("priceAsc"))
                     courses = courseRepository.findByCtprvnNmOrderByCoursePrcAsc(ctprvn);
                 else if (sortType.equals("priceDesc"))
