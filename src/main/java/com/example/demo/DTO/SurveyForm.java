@@ -11,7 +11,7 @@ public class SurveyForm {
     private String groups;    // To store 단체/개인 스포츠 선호도
     private String parti;     // To store 참여목적
     private Long price;     // To store 가격
-    private List<String> preferredSports; // To store 선호 스포츠 고르기
+    private String preferredSports; // To store 선호 스포츠 고르기
 
     // Getters and setters
     public String getDisabled() {
@@ -62,11 +62,11 @@ public class SurveyForm {
         this.price = price;
     }
 
-    public List<String> getPreferredSports() {
+    public String getPreferredSports() {
         return preferredSports;
     }
 
-    public void setPreferredSports(List<String> preferredSports) {
+    public void setPreferredSports(String preferredSports) {
         this.preferredSports = preferredSports;
     }
 }

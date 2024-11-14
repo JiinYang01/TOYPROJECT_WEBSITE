@@ -28,10 +28,10 @@ public class SurveyResponse {
 
     @Column(name = "preferred_sports")
 
-    private List<String> preferredSports;
+    private String preferredSports;
 
 
-    public SurveyResponse(String disabled, String sido, String sigugun, String groupPreference, Long price, String parti, List<String> preferredSports) {
+    public SurveyResponse(String disabled, String sido, String sigugun, String groupPreference, Long price, String parti, String preferredSports) {
         this.disabled = disabled;
         this.sido = sido;
         this.sigugun = sigugun;
