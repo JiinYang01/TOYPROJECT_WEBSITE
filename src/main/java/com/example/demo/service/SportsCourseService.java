@@ -104,4 +104,12 @@ public class SportsCourseService {
 
         return EntityToDTO(sportsCourse);
     }
+
+    public List<SportsCourseDTO> searchCourses(String keyword) {
+        List<SportsCourse> courseList = courseRepository.findByCourseNmContainingIgnoreCase(keyword);
+
+        return courseList.stream()
+                .map(this::EntityToDTO) // 메서드 레퍼런스 사용
+                .collect(Collectors.toList());
+    }
 }

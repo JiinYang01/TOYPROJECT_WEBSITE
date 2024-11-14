@@ -51,4 +51,13 @@ public class SportsCourseController {
         return "course_detail";
     }
 
+    @GetMapping("/search")
+    public String searchCourses(@RequestParam("keyword") String keyword, Model model) {
+        List<SportsCourseDTO> courseList = courseService.searchCourses(keyword);
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("keyword", keyword);
+
+        return "course_trend";
+    }
+
 }

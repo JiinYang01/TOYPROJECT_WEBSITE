@@ -36,4 +36,5 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     List<SportsCourse> findByCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(String ctprvnNm, String cignguNm);
     List<SportsCourse> findByCtprvnNmAndSignguNm(String ctprvnNm, String cignguNm);
 
+    List<SportsCourse> findByCourseNmContainingIgnoreCase(String keyword);
 }
