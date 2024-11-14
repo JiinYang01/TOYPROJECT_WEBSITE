@@ -7,6 +7,10 @@ import com.example.demo.domain.SportsCourse;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.SportsCourseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,72 +34,81 @@ public class SportsCourseService {
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
 
-    public List<SportsCourseDTO> getFilteredCourses(Long categoryId, String sortType, String ctprvn, String signgu) {
+    public Page<SportsCourseDTO> getFilteredCourses(Long categoryId, String sortType, String ctprvn, String signgu, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("courseNm").ascending());
+        Page<SportsCourse> coursesPage = null;
+
         System.out.println(signgu);
 
-        List<SportsCourse> courses;
-
         if (categoryId != null && ctprvn == null) {
-            if (sortType.equals("priceAsc"))
-                courses = courseRepository.findByCategory_CategoryIdOrderByCoursePrcAsc(categoryId);
-            else if (sortType.equals("priceDesc"))
-                courses = courseRepository.findByCategory_CategoryIdOrderByCoursePrcDesc(categoryId);
-            else if (sortType.equals("popularity"))
-                courses = courseRepository.findByCategory_CategoryIdOrderByCourseReqstNmprCoDesc(categoryId);
-            else
-                courses = courseRepository.findByCategory_CategoryId(categoryId);
+            switch (sortType) {
+                case "priceAsc" ->
+                        coursesPage = courseRepository.findByCategory_CategoryIdOrderByCoursePrcAsc(categoryId, pageable);
+                case "priceDesc" ->
+                        coursesPage = courseRepository.findByCategory_CategoryIdOrderByCoursePrcDesc(categoryId, pageable);
+                case "popularity" ->
+                        coursesPage = courseRepository.findByCategory_CategoryIdOrderByCourseReqstNmprCoDesc(categoryId, pageable);
+                default -> coursesPage = courseRepository.findByCategory_CategoryId(categoryId, pageable);
+            }
         } else if (categoryId == null && ctprvn == null){
-            if (sortType.equals("priceAsc"))
-                courses = courseRepository.findAllByOrderByCoursePrcAsc();
-            else if (sortType.equals("priceDesc"))
-                courses = courseRepository.findAllByOrderByCoursePrcDesc();
-            else if (sortType.equals("popularity"))
-                courses = courseRepository.findAllByOrderByCourseReqstNmprCoDesc();
-            else
-                courses = courseRepository.findAll();
+            switch (sortType) {
+                case "priceAsc" -> coursesPage = courseRepository.findAllByOrderByCoursePrcAsc(pageable);
+                case "priceDesc" -> coursesPage = courseRepository.findAllByOrderByCoursePrcDesc(pageable);
+                case "popularity" -> coursesPage = courseRepository.findAllByOrderByCourseReqstNmprCoDesc(pageable);
+                default -> coursesPage = courseRepository.findAll(pageable);
+            }
         } else if (categoryId != null) {
             if (signgu == null || signgu.isEmpty()) {
-                if (sortType.equals("priceAsc"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcAsc(categoryId, ctprvn);
-                else if (sortType.equals("priceDesc"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcDesc(categoryId, ctprvn);
-                else if (sortType.equals("popularity"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn);
-                else
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNm(categoryId, ctprvn);
+                switch (sortType) {
+                    case "priceAsc" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcAsc(categoryId, ctprvn, pageable);
+                    case "priceDesc" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcDesc(categoryId, ctprvn, pageable);
+                    case "popularity" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn, pageable);
+                    default ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNm(categoryId, ctprvn, pageable);
+                }
             } else {
-                if (sortType.equals("priceAsc"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcAsc(categoryId, ctprvn, signgu);
-                else if (sortType.equals("priceDesc"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcDesc(categoryId, ctprvn, signgu);
-                else if (sortType.equals("popularity"))
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn, signgu);
-                else
-                    courses = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNm(categoryId, ctprvn, signgu);
+                switch (sortType) {
+                    case "priceAsc" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcAsc(categoryId, ctprvn, signgu, pageable);
+                    case "priceDesc" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcDesc(categoryId, ctprvn, signgu, pageable);
+                    case "popularity" ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn, signgu, pageable);
+                    default ->
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNm(categoryId, ctprvn, signgu, pageable);
+                }
             }
         } else {
             if (signgu == null || signgu.isEmpty()) {
-                if (sortType.equals("priceAsc"))
-                    courses = courseRepository.findByCtprvnNmOrderByCoursePrcAsc(ctprvn);
-                else if (sortType.equals("priceDesc"))
-                    courses = courseRepository.findByCtprvnNmOrderByCoursePrcDesc(ctprvn);
-                else if (sortType.equals("popularity"))
-                    courses = courseRepository.findByCtprvnNmOrderByCourseReqstNmprCoDesc(ctprvn);
-                else
-                    courses = courseRepository.findByCtprvnNm(ctprvn);
+                switch (sortType) {
+                    case "priceAsc" ->
+                            coursesPage = courseRepository.findByCtprvnNmOrderByCoursePrcAsc(ctprvn, pageable);
+                    case "priceDesc" ->
+                            coursesPage = courseRepository.findByCtprvnNmOrderByCoursePrcDesc(ctprvn, pageable);
+                    case "popularity" ->
+                            coursesPage = courseRepository.findByCtprvnNmOrderByCourseReqstNmprCoDesc(ctprvn, pageable);
+                    default -> coursesPage = courseRepository.findByCtprvnNm(ctprvn, pageable);
+                }
             } else {
-                if (sortType.equals("priceAsc"))
-                    courses = courseRepository.findByCtprvnNmAndSignguNmOrderByCoursePrcAsc(ctprvn, signgu);
-                else if (sortType.equals("priceDesc"))
-                    courses = courseRepository.findByCtprvnNmAndSignguNmOrderByCoursePrcDesc(ctprvn, signgu);
-                else if (sortType.equals("popularity"))
-                    courses = courseRepository.findByCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(ctprvn, signgu);
-                else
-                    courses = courseRepository.findByCtprvnNmAndSignguNm(ctprvn, signgu);
+                switch (sortType) {
+                    case "priceAsc" ->
+                            coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCoursePrcAsc(ctprvn, signgu, pageable);
+                    case "priceDesc" ->
+                            coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCoursePrcDesc(ctprvn, signgu, pageable);
+                    case "popularity" ->
+                            coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(ctprvn, signgu, pageable);
+                    default -> coursesPage = courseRepository.findByCtprvnNmAndSignguNm(ctprvn, signgu, pageable);
+                }
             }
         }
 
-        return courses.stream().map(this::EntityToDTO).collect(Collectors.toList());
+        if (coursesPage == null)
+            return Page.empty(pageable);
+        else
+            return coursesPage.map(this::EntityToDTO);
     }
 
     public SportsCourseDTO getCourseById(Long courseId) {
@@ -105,11 +118,21 @@ public class SportsCourseService {
         return EntityToDTO(sportsCourse);
     }
 
-    public List<SportsCourseDTO> searchCourses(String keyword) {
-        List<SportsCourse> courseList = courseRepository.findByCourseNmContainingIgnoreCase(keyword);
+//    public List<SportsCourseDTO> searchCourses(String keyword) {
+//        List<SportsCourse> courseList = courseRepository.findByCourseNmContainingIgnoreCase(keyword);
+//
+//        return courseList.stream()
+//                .map(this::EntityToDTO) // 메서드 레퍼런스 사용
+//                .collect(Collectors.toList());
+//    }
 
-        return courseList.stream()
-                .map(this::EntityToDTO) // 메서드 레퍼런스 사용
-                .collect(Collectors.toList());
+    public Page<SportsCourseDTO> searchCourses(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("courseNm").ascending());
+        Page<SportsCourse> coursePage = courseRepository.findByCourseNmContainingIgnoreCase(keyword, pageable);
+
+        if (coursePage == null)
+            return Page.empty(pageable);
+        else
+            return coursePage.map(this::EntityToDTO);
     }
 }
