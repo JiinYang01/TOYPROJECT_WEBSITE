@@ -16,8 +16,9 @@ public class SurveyDTO {
     private String parti;     // To store 참여목적
     private String price;     // To store 가격
     private List<String> preferredSports; // To store 선호 스포츠 고르기
+    private Long userId;      // 사용자 ID 추가
 
-    public SurveyDTO(String disabled, String sido, String sigugun, String groups, String parti, String price, List<String> preferredSports) {
+    public SurveyDTO(String disabled, String sido, String sigugun, String groups, String parti, String price, List<String> preferredSports,Long userId) {
         this.disabled = disabled;
         this.sido = sido;
         this.sigugun = sigugun;
@@ -25,5 +26,6 @@ public class SurveyDTO {
         this.parti = parti;
         this.price = price;
         this.preferredSports = preferredSports;
+        this.userId = userId;
     }
 }

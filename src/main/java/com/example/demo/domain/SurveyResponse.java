@@ -30,8 +30,11 @@ public class SurveyResponse {
 
     private String preferredSports;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public SurveyResponse(String disabled, String sido, String sigugun, String groupPreference, Long price, String parti, String preferredSports) {
+    public SurveyResponse(String disabled, String sido, String sigugun, String groupPreference, Long price, String parti, String preferredSports,User user) {
         this.disabled = disabled;
         this.sido = sido;
         this.sigugun = sigugun;
@@ -39,5 +42,6 @@ public class SurveyResponse {
         this.price = price;
         this.parti = parti;
         this.preferredSports = preferredSports;
+        this.user = user;
     }
 }

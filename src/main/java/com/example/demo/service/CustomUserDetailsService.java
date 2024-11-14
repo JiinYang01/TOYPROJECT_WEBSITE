@@ -22,6 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = (User) userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
 
+        // 권한 설정 - roles가 없는 경우 기본 권한 설정
+        String[] roles = user.getRoles() != null ?
+                user.getRoles().toArray(new String[0]) : new String[]{"USER"};
+
         // org.springframework.security.core.userdetails.User를 명시적으로 사용
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
