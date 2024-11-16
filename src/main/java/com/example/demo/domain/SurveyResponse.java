@@ -34,6 +34,8 @@ public class SurveyResponse {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // 필요한 경우 다른 생성자 추가
+
     public SurveyResponse(String disabled, String sido, String sigugun, String groupPreference, Long price, String parti, String preferredSports,User user) {
         this.disabled = disabled;
         this.sido = sido;

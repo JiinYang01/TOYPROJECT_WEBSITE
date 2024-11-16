@@ -43,4 +43,7 @@ public class User implements Serializable {
     public Collection<String> getRoles() {
         return Collections.singleton(roles.toString());
     }
+
+
+
 }
