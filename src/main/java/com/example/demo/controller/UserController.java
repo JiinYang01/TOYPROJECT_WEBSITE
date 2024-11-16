@@ -4,11 +4,14 @@ import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.DTO.SurveyDTO;
 import com.example.demo.DTO.UserCreateDTO;
 import com.example.demo.DTO.UserCreateForm;
+import com.example.demo.domain.CustomUserDetails;
+import com.example.demo.domain.User;
 import com.example.demo.service.CustomUserDetailsService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,8 +62,8 @@ public class UserController {
     }
 
     @PostMapping("/recommendpage")
-    public String recommendpage(Long UserId,Model model) {
-        System.out.println();
+    public String recommendpage(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+        System.out.println(user.getUserId());
         return "course_recommend"; // course_recommend.html 템플릿으로 이동
     }
 
