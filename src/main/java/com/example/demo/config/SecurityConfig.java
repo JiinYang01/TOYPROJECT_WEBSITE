@@ -25,7 +25,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll() // 로그인 및 공개 페이지
-                        .requestMatchers("/surveypage").authenticated() // "/survey" URL은 인증된 사용자만 접근
+                        .requestMatchers("/surveypage", "/submitForm").authenticated() // "/survey" URL은 인증된 사용자만 접근
                         .anyRequest().permitAll()
                 )
                 .formLogin((formLogin) -> formLogin

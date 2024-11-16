@@ -10,7 +10,7 @@
     <link href="css/surveypage.css" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/user/recommendpage}" th:object="${surveyForm}" method="post">
+    <form th:action="@{/submitForm}" th:object="${surveyForm}" method="post">
         <h2 th:text="${formTitle}">맞춤형 스포츠 강좌</h2>
         <div>
             <strong>장애인/비장애인 여부</strong>
