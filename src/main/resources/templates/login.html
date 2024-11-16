@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Form</title>
-    <link href="css/login.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
 </head>
 
 <body>
 <div>
     <a class="navbar-brand" th:href="@{/}"><h1>BBB</h1></a>
     <h1>로그인</h1>
-    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <form th:action="@{/user/login}" th:object="${loginForm}" method="post">
         <input type="text" placeholder="아이디" th:field="*{username}" class="in">
         <input type="password" placeholder="비밀번호" th:field="*{password}" class="in">
         <input type="submit" id="btn" value="로그인">
-        <input type="button" id="btn1" value="회원가입" th:onclick="|location.href='@{/register}'|">
+        <input type="button" id="btn1" value="회원가입" th:onclick="|location.href='@{/user/register}'|">
     </form>
 </div>
 </body>

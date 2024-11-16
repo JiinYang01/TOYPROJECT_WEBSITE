@@ -31,19 +31,6 @@ public class BasicController {
         return "index";
     }
 
-
-    @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        model.addAttribute("loginForm", new LoginForm()); // LoginForm 객체를 모델에 추가
-        return "login"; // login.html 템플릿으로 이동
-    }
-
-
-    @GetMapping("/register")
-    public String register(UserCreateForm userCreateForm) {
-        return "signup";
-    }
-
     @GetMapping("/surveypage")
     public String showSurveyPage(Model model) {
         model.addAttribute("formTitle", "맞춤형 스포츠 강좌");

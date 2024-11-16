@@ -49,6 +49,5 @@ public class SurveyService {
         return (User) userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다."));
     }
-
-    }
+ }
 
