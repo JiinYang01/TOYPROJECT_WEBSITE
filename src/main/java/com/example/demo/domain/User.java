@@ -1,8 +1,6 @@
 package com.example.demo.domain;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,10 +14,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
     @Column(unique = true)
     private String email;
-
     private String password;
     private String userName;
     private Boolean disabled;
@@ -40,8 +36,9 @@ public class User implements Serializable {
     }
 
     //    public Collection<Object> getRoles() {
-//        return java.util.List.of();
-//    }
+    //        return java.util.List.of();
+// }
+
     // roles 필드를 사용하여 역할 반환
     public Collection<String> getRoles() {
         return Collections.singleton(roles.toString());
