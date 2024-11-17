@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title th:text="${title}">Scrolling Nav - Start Bootstrap Template</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-</head>
-<body id="page-top">
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko" layout:decorate="~{layout}">-->
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<!--<head>-->
+<!--&lt;!&ndash;    <meta charset="utf-8" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />&ndash;&gt;-->
+<!--    <meta name="description" content="" />-->
+<!--    <meta name="author" content="" />-->
+<!--    <title th:text="${title}">Scrolling Nav - Start Bootstrap Template</title>-->
+<!--    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />-->
+<!--    &lt;!&ndash; Core theme CSS (includes Bootstrap)&ndash;&gt;-->
+<!--    <link href="css/styles.css" rel="stylesheet" />-->
+<!--</head>-->
+<!--<body id="page-top">-->
 <!-- Navigation-->
 
 <!--<div th:replace="fragments/navbar :: navbar"></div>-->
-<div th:insert="~{fragments/navbar :: navbar}"></div>
+<!--<div th:insert="~{fragments/navbar :: navbar}"></div>-->
 
 <!-- Header-->
+<div layout:fragment="content" class="container my-3">
 <header class="bg-primary bg-gradient text-white">
     <div class="container px-4 text-center">
         <h1 class="fw-bolder" th:text="${welcomeMessage}">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
@@ -47,6 +51,6 @@
     </div>
 </section>
 <!-- Footer-->
-
-</body>
+</div>
+<!--</body>-->
 </html>
