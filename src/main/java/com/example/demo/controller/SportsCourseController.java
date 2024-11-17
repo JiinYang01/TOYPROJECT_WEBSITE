@@ -53,7 +53,6 @@ public class SportsCourseController {
         SportsCourseDTO course = courseService.getCourseById(courseId);
         // 모델에 강좌 정보를 추가하여 Thymeleaf 템플릿에 전달
         model.addAttribute("course", course);
-
         // course_detail.html로 이동
         return "course_detail";
     }

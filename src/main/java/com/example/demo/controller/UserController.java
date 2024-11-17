@@ -74,10 +74,9 @@ public class UserController {
 //    @PostMapping("/recommendpage")
 //    public String recommendpage(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 //        Long userId = user.getUserId();
-//
-//        List<SurveyResponse> responses = surveyService.getResponsesByUserId(user);
-//        model.addAttribute("responses", responses);
-//        System.out.println(model);
+////       List<SurveyResponse> responses = surveyService.getResponsesByUserId(user);
+////       model.addAttribute("responses", responses);
+////       System.out.println(model);
 //        return "course_recommend"; // course_recommend.html 템플릿으로 이동
 //    }
 

@@ -1,15 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.LoginForm;
-import com.example.demo.DTO.SurveyForm;
+import com.example.demo.DTO.*;
 import com.example.demo.domain.CustomUserDetails;
 import com.example.demo.domain.SurveyResponse;
+import com.example.demo.service.CategoryService;
+import com.example.demo.service.SportsCourseService;
 import com.example.demo.service.SurveyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
-import com.example.demo.DTO.UserCreateForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,9 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
+
+@RequiredArgsConstructor
 @Controller
 public class BasicController {
+    private final CategoryService categoryService;
+    private final SportsCourseService courseService;
+
 
     @GetMapping("/")
     public String hi(Model model) {
@@ -62,20 +69,13 @@ public class BasicController {
 
     @PostMapping("/submitForm")
     public String submitSurveyForm(@ModelAttribute SurveyForm surveyForm, @AuthenticationPrincipal CustomUserDetails user, RedirectAttributes redirectAttributes, Model model) {
-        // Use the injected service
-//        redirectAttributes.addFlashAttribute("message", "Survey submitted successfully!");
-//        return "redirect:/";
-
-//        var authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Long userId = Long.parseLong(authentication.getName());
-//
-//        System.out.println(userId);
-
         surveyService.saveSurveyResponse(surveyForm, user);
-
         SurveyResponse response = surveyService.getResponsesByUserId(user);
+        // DTO를 통해 강좌 상세 정보를 가져온다.
+        List<CategoryDTO> categoryList = this.categoryService.getList();
+        // 모델에 설문 조사 결과를 추가하여 Thymeleaf 템플릿에 전달
         model.addAttribute("responses", response);
-        System.out.println(model);
+        model.addAttribute("categoryList", categoryList);
         return "course_recommend";
     }
 
