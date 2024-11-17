@@ -16,7 +16,9 @@
 <!--&lt;!&ndash;<div th:replace="fragments/navbar :: navbar"></div>&ndash;&gt;-->
 <!--<div th:insert="~{fragments/navbar :: navbar}"></div>-->
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
 <div layout:fragment="content" class="container my-3">
+
 <!-- Header-->
 <header class="bg-primary bg-gradient text-white">
     <div class="container px-4 text-center">
@@ -25,6 +27,7 @@
         <p class="lead" th:text="${customerService}">고객센터: 010-1111-0000</p>
     </div>
 </header>
+
 <!-- About section-->
 <section id="about">
     <div class="container px-4">
@@ -47,6 +50,7 @@
         </div>
     </div>
 </section>
+
 <!-- Footer-->
 </div>
 </html>
