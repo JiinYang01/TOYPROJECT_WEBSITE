@@ -1,11 +1,8 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko" layout:decorate="~{layout}">-->
-<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
-
 <!--<head>-->
-<!--&lt;!&ndash;    <meta charset="utf-8" />&ndash;&gt;-->
-<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />&ndash;&gt;-->
+<!--    <meta charset="utf-8" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
 <!--    <meta name="description" content="" />-->
 <!--    <meta name="author" content="" />-->
 <!--    <title th:text="${title}">Scrolling Nav - Start Bootstrap Template</title>-->
@@ -14,13 +11,13 @@
 <!--    <link href="css/styles.css" rel="stylesheet" />-->
 <!--</head>-->
 <!--<body id="page-top">-->
-<!-- Navigation-->
+<!--&lt;!&ndash; Navigation&ndash;&gt;-->
 
-<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<!--&lt;!&ndash;<div th:replace="fragments/navbar :: navbar"></div>&ndash;&gt;-->
 <!--<div th:insert="~{fragments/navbar :: navbar}"></div>-->
-
-<!-- Header-->
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" class="container my-3">
+<!-- Header-->
 <header class="bg-primary bg-gradient text-white">
     <div class="container px-4 text-center">
         <h1 class="fw-bolder" th:text="${welcomeMessage}">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
@@ -52,5 +49,4 @@
 </section>
 <!-- Footer-->
 </div>
-<!--</body>-->
 </html>
