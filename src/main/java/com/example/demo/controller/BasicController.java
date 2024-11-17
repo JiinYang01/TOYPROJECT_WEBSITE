@@ -2,8 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.LoginForm;
 import com.example.demo.DTO.SurveyForm;
+import com.example.demo.domain.CustomUserDetails;
+import com.example.demo.domain.SurveyResponse;
 import com.example.demo.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import com.example.demo.DTO.UserCreateForm;
 import org.springframework.stereotype.Controller;
@@ -44,10 +48,22 @@ public class BasicController {
     private SurveyService surveyService;  // Inject SurveyService
 
     @PostMapping("/submitForm")
-    public String submitSurveyForm(@ModelAttribute SurveyForm surveyForm, RedirectAttributes redirectAttributes) {
-        surveyService.saveSurveyResponse(surveyForm);  // Use the injected service
-        redirectAttributes.addFlashAttribute("message", "Survey submitted successfully!");
-        return "redirect:/";
+    public String submitSurveyForm(@ModelAttribute SurveyForm surveyForm, @AuthenticationPrincipal CustomUserDetails user, RedirectAttributes redirectAttributes, Model model) {
+        // Use the injected service
+//        redirectAttributes.addFlashAttribute("message", "Survey submitted successfully!");
+//        return "redirect:/";
+
+//        var authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Long userId = Long.parseLong(authentication.getName());
+//
+//        System.out.println(userId);
+
+        surveyService.saveSurveyResponse(surveyForm, user);
+
+        SurveyResponse response = surveyService.getResponsesByUserId(user);
+        model.addAttribute("responses", response);
+        System.out.println(model);
+        return "course_recommend";
     }
 
 }

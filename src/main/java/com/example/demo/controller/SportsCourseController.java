@@ -51,7 +51,6 @@ public class SportsCourseController {
     public String getCourseDetail(@PathVariable("courseId") Long courseId, Model model) {
         // DTO를 통해 강좌 상세 정보를 가져온다.
         SportsCourseDTO course = courseService.getCourseById(courseId);
-
         // 모델에 강좌 정보를 추가하여 Thymeleaf 템플릿에 전달
         model.addAttribute("course", course);
 

@@ -60,9 +60,4 @@ public class UserController {
         return "login"; // login.html 템플릿으로 이동
     }
 
-
-//    @GetMapping("/register")
-//    public String register(UserCreateForm userCreateForm) {
-//        return "signup";
-//    }
 }
