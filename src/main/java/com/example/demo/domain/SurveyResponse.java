@@ -1,13 +1,18 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 //import javax.persistence.*;
 
+@Getter
 @Entity
 @Table(name = "survey_responses")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SurveyResponse {
 
     @Id

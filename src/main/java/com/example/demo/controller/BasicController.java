@@ -73,8 +73,8 @@ public class BasicController {
 
         surveyService.saveSurveyResponse(surveyForm, user);
 
-        List<SurveyResponse> responses = surveyService.getResponsesByUserId(user);
-        model.addAttribute("responses", responses);
+        SurveyResponse response = surveyService.getResponsesByUserId(user);
+        model.addAttribute("responses", response);
         System.out.println(model);
         return "course_recommend";
     }
