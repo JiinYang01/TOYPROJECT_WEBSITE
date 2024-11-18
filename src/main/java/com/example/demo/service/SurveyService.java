@@ -73,5 +73,18 @@ public class SurveyService {
                     .ifPresent(existingResponse -> surveyRepository.deleteById(existingResponse.getId()));
         surveyRepository.save(entity);
     }
+public Boolean getUserId(CustomUserDetails user) {
+    User currentUser = getCurrentUser(user);
+    if (currentUser == null) {
+        throw new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다.");
+    }
+    if(surveyRepository.findByUser_UserId(currentUser.getUserId()).isEmpty()){
+     return Boolean.FALSE;
+    }else{
+        return Boolean.TRUE;
+    }
+    }
+
+    
 }
 
