@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.CategoryDTO;
+import com.example.demo.DTO.SurveyDTO;
 import com.example.demo.DTO.SurveyForm;
+import com.example.demo.domain.Category;
 import com.example.demo.domain.CustomUserDetails;
 import com.example.demo.domain.SurveyResponse;
 import com.example.demo.domain.User;
@@ -8,11 +11,13 @@ import com.example.demo.repository.SurveyRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.el.stream.Optional;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,11 +64,9 @@ public class SurveyService {
 
     public SurveyResponse getResponsesByUserId(CustomUserDetails user) {
         User currentUser = getCurrentUser(user);
-
         if (currentUser == null) {
             throw new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다.");
         }
-
         return surveyRepository.findByUser_UserId(currentUser.getUserId()).orElseThrow(() -> new IllegalArgumentException("해당 사용자의 설문 응답을 찾을 수 없습니다."));
     }
 
@@ -72,6 +75,20 @@ public class SurveyService {
         surveyRepository.findByUser_UserId(userId)
                     .ifPresent(existingResponse -> surveyRepository.deleteById(existingResponse.getId()));
         surveyRepository.save(entity);
+    }
+
+
+//내코드
+public Boolean getUserId(CustomUserDetails user) {
+    User currentUser = getCurrentUser(user);
+    if (currentUser == null) {
+        throw new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다.");
+    }
+    if(surveyRepository.findByUser_UserId(currentUser.getUserId()).isEmpty()){
+     return Boolean.FALSE;
+    }else{
+        return Boolean.TRUE;
+    }
     }
 }
 
