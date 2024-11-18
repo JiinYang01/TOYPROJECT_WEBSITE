@@ -10829,6 +10829,8 @@ html {
 }
 
 header {
+  margin: 0px;
+  padding: 0px;
   padding-top: 9.5rem;
   padding-bottom: 6rem;
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.SurveyDTO;
 import com.example.demo.DTO.SurveyForm;
 import com.example.demo.domain.CustomUserDetails;
 import com.example.demo.domain.SurveyResponse;
@@ -12,7 +13,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +40,7 @@ public class SurveyService {
 
 
     private SurveyResponse dtoToEntity (SurveyForm dto, User currentUser){
-        return new SurveyResponse(dto.getDisabled(), dto.getSido(), dto.getSigugun(), dto.getGroups(), dto.getPrice(), dto.getParti(), dto.getPreferredSports(), currentUser);
+        return new SurveyResponse(dto.getDisabled(), dto.getSido(), dto.getSigugun(), dto.getGroups(), dto.getPrice(), dto.getParti(), dto.getPreferredSports().toString(), currentUser);
     }
 
     // 현재 로그인된 사용자 정보를 가져오는 메서드
@@ -57,14 +60,30 @@ public class SurveyService {
                 .orElseThrow(() -> new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다."));
     }
 
-    public SurveyResponse getResponsesByUserId(CustomUserDetails user) {
+    public SurveyDTO getResponsesByUserId(CustomUserDetails user) {
         User currentUser = getCurrentUser(user);
 
         if (currentUser == null) {
             throw new IllegalArgumentException("현재 로그인된 사용자 정보를 찾을 수 없습니다.");
         }
 
-        return surveyRepository.findByUser_UserId(currentUser.getUserId()).orElseThrow(() -> new IllegalArgumentException("해당 사용자의 설문 응답을 찾을 수 없습니다."));
+        SurveyResponse entity = surveyRepository.findByUser_UserId(currentUser.getUserId()).orElseThrow(() -> new IllegalArgumentException("해당 사용자의 설문 응답을 찾을 수 없습니다."));
+
+        List<Long> preferredSports;
+        String input = entity.getPreferredSports();
+        if (input == null || input.isEmpty()) {
+            preferredSports = List.of();
+        }
+
+        // 문자열을 분리하고 Long 타입으로 변환
+        assert input != null;
+        preferredSports = Arrays.stream(input.replaceAll("[\\[\\]]", "") // 대괄호 제거
+                        .split(","))
+                .map(String::trim)                      // 공백 제거
+                .map(Long::valueOf)                     // Long 타입으로 변환
+                .collect(Collectors.toList());
+
+        return new SurveyDTO(entity.getDisabled(), entity.getSido(), entity.getSigugun(), entity.getGroupPreference(), entity.getParti(), entity.getPrice(), preferredSports, entity.getUser().getUserId());
     }
 
     @Transactional

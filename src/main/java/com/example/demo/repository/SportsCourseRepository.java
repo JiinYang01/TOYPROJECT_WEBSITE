@@ -1,9 +1,12 @@
 package com.example.demo.repository;
 
+import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.domain.SportsCourse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -39,5 +42,20 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     Page<SportsCourse> findByCtprvnNmAndSignguNm(String ctprvnNm, String cignguNm, Pageable pageable);
 
     Page<SportsCourse> findByCourseNmContainingIgnoreCase(String keyword, Pageable pageable);
+
+    @Query("SELECT sc FROM SportsCourse sc " +
+            "WHERE (sc.category.categoryId = :preferredSports1 or sc.category.categoryId = :preferredSports2 or sc.category.categoryId = :preferredSports3) " +
+            "AND sc.ctprvnNm = :sido " +
+            "AND sc.signguNm = :sigugun " +
+            "AND sc.coursePrc <= :price " +
+            "ORDER BY sc.courseReqstNmprCo DESC")
+    List<SportsCourse> findRecommendedCourses(
+            @Param("preferredSports1") Long categoryId1,
+            @Param("preferredSports2") Long categoryId2,
+            @Param("preferredSports3") Long categoryId3,
+            @Param("sido") String sido,
+            @Param("sigugun") String sigugun,
+            @Param("price") Long price,
+            Pageable pageable);
 
 }

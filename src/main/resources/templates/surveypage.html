@@ -43,14 +43,14 @@
         </div>
         <div>
             <strong>가격 어느정도까지?</strong>
-            <input type="text" th:field="*{price}" id="input2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"> 원
+            <input type="number" th:field="*{price}" id="input2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"> 원
         </div>
         <div>
             <strong>선호 스포츠 고르기(3가지 이상)</strong>
             <div class="checkbox-group">
                 <div th:each="sport : ${sports}">
-                    <input type="checkbox" th:field="*{preferredSports}" th:value="${sport}" th:id="${sport}">
-                    <label th:for="${sport}" th:text="${sport}">스포츠</label>
+                    <input type="checkbox" th:field="*{preferredSports}" th:value="${sport.categoryId}" th:id="${sport}">
+                    <label th:for="${sport}" th:text="${sport.categoryName}">스포츠</label>
                 </div>
             </div>
         </div>

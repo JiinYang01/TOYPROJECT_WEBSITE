@@ -14,11 +14,11 @@ public class SurveyDTO {
     private String sigugun;   // To store 거주지역 - 시군구
     private String groups;    // To store 단체/개인 스포츠 선호도
     private String parti;     // To store 참여목적
-    private String price;     // To store 가격
-    private List<String> preferredSports; // To store 선호 스포츠 고르기
+    private Long price;     // To store 가격
+    private List<Long> preferredSports; // To store 선호 스포츠 고르기
     private Long userId;      // 사용자 ID 추가
 
-    public SurveyDTO(String disabled, String sido, String sigugun, String groups, String parti, String price, List<String> preferredSports,Long userId) {
+    public SurveyDTO(String disabled, String sido, String sigugun, String groups, String parti, Long price, List<Long> preferredSports,Long userId) {
         this.disabled = disabled;
         this.sido = sido;
         this.sigugun = sigugun;

@@ -21,14 +21,18 @@ public class SurveyResponse {
 
     private String disabled;
 
+    @Column(name = "ctprvn_nm")
     private String sido; // Updated from locationSido to sido
 
+    @Column(name = "signgu_nm")
     private String sigugun; // Updated from locationSigugun to sigugun
 
     @Column(name = "group_preference") // Rename column to avoid SQL reserved keyword conflict
     private String groupPreference;
 
     private String parti;
+
+    @Column(name = "course_prc")
     private Long price;
 
     @Column(name = "preferred_sports")
