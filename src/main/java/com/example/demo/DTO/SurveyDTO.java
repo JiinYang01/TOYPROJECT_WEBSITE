@@ -28,4 +28,6 @@ public class SurveyDTO {
         this.preferredSports = preferredSports;
         this.userId = userId;
     }
+
+
 }

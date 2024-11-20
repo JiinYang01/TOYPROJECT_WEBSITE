@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.DTO.CategoryDTO;
 import com.example.demo.DTO.SportsCourseDTO;
-import com.example.demo.domain.Category;
 import com.example.demo.domain.SportsCourse;
-import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.SportsCourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -135,4 +132,8 @@ public class SportsCourseService {
         else
             return coursePage.map(this::EntityToDTO);
     }
+
+
+
+
 }

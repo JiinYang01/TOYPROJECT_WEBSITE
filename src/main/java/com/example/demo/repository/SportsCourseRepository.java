@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+//SportsCourseCustomRepository 내코드
 public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long> {
 
     Page<SportsCourse> findAllByOrderByCoursePrcAsc(Pageable pageable);
@@ -39,5 +40,11 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     Page<SportsCourse> findByCtprvnNmAndSignguNm(String ctprvnNm, String cignguNm, Pageable pageable);
 
     Page<SportsCourse> findByCourseNmContainingIgnoreCase(String keyword, Pageable pageable);
+
+    //내코드
+    List<SportsCourse> findAllByOrderByCoursePrcAsc();
+    List<SportsCourse> findByCtprvnNmAndSignguNmAndCoursePrcLessThanEqualAndCourseNmContainingIgnoreCase(
+            String sido, String sigugun, Integer price, String keyword);
+
 
 }
