@@ -47,7 +47,7 @@ public class BasicController {
     }
 
     @GetMapping("/surveypage")
-    public String showSurveyPage(Model model) {
+    public String showSurveyPage(Model model, @AuthenticationPrincipal CustomUserDetails user) {
         model.addAttribute("formTitle", "맞춤형 스포츠 강좌");
         model.addAttribute("surveyForm", new SurveyForm());
         model.addAttribute("regions", List.of("서울", "부산", "인천"));  // Sample regions
@@ -68,7 +68,9 @@ public class BasicController {
         model.addAttribute("formTitle", "맞춤형 스포츠 강좌");
         model. addAttribute("surveyForm", new SurveyForm());
         model.addAttribute("regions", List.of("서울", "부산", "인천"));  // Sample regions
-        model.addAttribute("sports", List.of("검도", "골프", "농구", "당구", "배드민턴","복싱","볼링","야구","에어로빅","요가","유도","주짓수","댄스","롤러인라인","무용","배구","에어로빅","빙상(스케이트)","수영","스쿼시","승마","줄넘기","축구(풋살)","크로스핏","에어로빅","클라이밍","탁구","태권도","테니스","펜싱","필라테스","합기도","헬스"));  // Sample sports
+
+        List<CategoryDTO> sports = categoryService.getList();
+        model.addAttribute("sports", sports);  // Sample sports
         return "surveypage";
 
     }
