@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.LoginForm;
+import com.example.demo.DTO.SurveyDTO;
 import com.example.demo.DTO.SurveyForm;
 import com.example.demo.domain.CustomUserDetails;
 import com.example.demo.domain.SurveyResponse;
@@ -60,7 +61,7 @@ public class BasicController {
 
         surveyService.saveSurveyResponse(surveyForm, user);
 
-        SurveyResponse response = surveyService.getResponsesByUserId(user);
+        SurveyDTO response = surveyService.getResponsesByUserId(user);
         model.addAttribute("responses", response);
         System.out.println(model);
         return "course_recommend";

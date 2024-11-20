@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public class User implements Serializable {
 
     @Id
