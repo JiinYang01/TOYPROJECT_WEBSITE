@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+//SportsCourseCustomRepository 내코드
 public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long> {
 
     Page<SportsCourse> findAllByOrderByCoursePrcAsc(Pageable pageable);

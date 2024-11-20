@@ -1,16 +1,22 @@
-package com.example.demo.DTO;
-
-import com.example.demo.domain.Category;
+package com.example.demo.domain;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
-@Data
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
-public class SportsCourseDTO {
+@Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class disabledSportsCourse implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
+
     private String courseNm;
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
     private Category category;
     private String fcltyName;
     private String ctprvnNm;
@@ -22,8 +28,9 @@ public class SportsCourseDTO {
     private String courseEndDe;
     private Long courseReqstNmprCo;
     private Long coursePrc;
+    private String trobltyNM;
 
-    public SportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
+    public disabledSportsCourse(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc,String trobltyNM) {
         this.courseId = courseId;
         this.courseNm = courseNm;
         this.category = category;
@@ -37,5 +44,7 @@ public class SportsCourseDTO {
         this.courseEndDe = courseEndDe;
         this.courseReqstNmprCo = courseReqstNmprCo;
         this.coursePrc = coursePrc;
+        this.trobltyNM=trobltyNM;
     }
+
 }

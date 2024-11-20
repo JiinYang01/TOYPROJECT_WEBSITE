@@ -1,9 +1,10 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
-    <div class="container my-4">
-        <!-- 3개 추천 -->
-        <!-- 검색 필드 -->
-        <!-- 필터 버튼 -->
+<div class="container my-4">
+    <!-- 3개 추천 -->
+    <!-- 검색 필드 -->
+    <!-- 필터 버튼 -->
+ <h5 th:text="${responses.sido} +${responses.sigugun}"/>
         <div class="my-3">
             <a th:href="@{/course/trend(sortType='priceAsc', categoryId=${selectedCategoryId})}"
                class="btn btn-light me-2" th:classappend="${sortType == 'priceAsc'} ? 'active' : ''">가격순</a>
@@ -15,31 +16,29 @@
 
         <!-- 지역 선택 필터 -->
         <div class="my-3">
-            <h5>지역 선택</h5>
             <form th:action="@{/user/recommend}" method="get" class="d-flex">
-                <div class="btn-group" role="group">
-                    <select id="sido" name="ctprvn" th:value="${ctprvn}">
-                        <option value="">시도 선택</option>
-                    </select>
+     <!--           <div class="btn-group" role="group">
+              <select id="sido" name="ctprvn" th:value="${ctprvn}">
+                     <option value="">시도 선택</option>
+                </select>
                     <select id="sigugun" name="signgu" th:value="${signgu}">
                         <option value="">시군구 선택</option>
                     </select>
-    <!--                <a th:href="@{/course/trend(categoryId=${selectedCategoryId}, sortType=${sortType}, ctprvn=${ctprvn}, signgu=${signgu})}"-->
+                   <a th:href="@{/course/trend(categoryId=${selectedCategoryId}, sortType=${sortType}, ctprvn=${ctprvn}, signgu=${signgu})}"-->
     <!--                   th:text="검색"-->
     <!--                   class="btn">-->
     <!--                </a>-->
-                </div>
-                <button type="submit" class="btn btn-primary">검색</button>
-            </form>
-        </div>
-
-        <!-- 카테고리 리스트 -->
+                <!--            </div>
+                         <button type="submit" class="btn btn-primary">검색</button>
+                     </form>
+                 </div>
+                카테고리 리스트 -->
         <div class="my-3">
             <h5>카테고리 선택</h5>
             <div class="btn-group" role="group">
                 <a th:each="category : ${categoryList}"
                    th:href="@{/course/trend(categoryId=${category.categoryId}, sortType=${sortType})}"
-                   th:text="${category.categoryName}"
+                   th:text="${response.}"
                    th:classappend="${selectedCategoryId == category.categoryId} ? 'btn-primary' : 'btn-outline-secondary'"
                    class="btn">
                 </a>
@@ -61,7 +60,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
     <!-- jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>

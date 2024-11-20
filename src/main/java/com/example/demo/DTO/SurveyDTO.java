@@ -2,12 +2,14 @@ package com.example.demo.DTO;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Getter
 public class SurveyDTO {
     private String disabled; // To store 장애인/비장애인 여부
     private String sido;      // To store 거주지역 - 시도
