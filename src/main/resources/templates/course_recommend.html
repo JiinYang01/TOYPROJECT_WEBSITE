@@ -1,65 +1,67 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
-<div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
+<div layout:fragment="content" class="container my-3" style="margin-top: 80px !important;">
     <div class="container my-4">
-        <!-- 3개 추천 -->
-        <!-- 검색 필드 -->
-        <!-- 필터 버튼 -->
-        <div class="my-3">
-            <a th:href="@{/course/trend(sortType='priceAsc', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'priceAsc'} ? 'active' : ''">가격순</a>
-            <a th:href="@{/course/trend(sortType='priceDesc', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'priceDesc'} ? 'active' : ''">가격 역순</a>
-            <a th:href="@{/course/trend(sortType='popularity', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'popularity'} ? 'active' : ''">인기순</a>
-        </div>
 
         <!-- 지역 선택 필터 -->
         <div class="my-3">
-            <h5>지역 선택</h5>
-            <form th:action="@{/user/recommend}" method="get" class="d-flex">
-                <div class="btn-group" role="group">
-                    <select id="sido" name="ctprvn" th:value="${ctprvn}">
-                        <option value="">시도 선택</option>
-                    </select>
-                    <select id="sigugun" name="signgu" th:value="${signgu}">
-                        <option value="">시군구 선택</option>
-                    </select>
-                    <!--                <a th:href="@{/course/trend(categoryId=${selectedCategoryId}, sortType=${sortType}, ctprvn=${ctprvn}, signgu=${signgu})}"-->
-                    <!--                   th:text="검색"-->
-                    <!--                   class="btn">-->
-                    <!--                </a>-->
-                </div>
-                <button type="submit" class="btn btn-primary">검색</button>
-            </form>
-        </div>
-
-        <!-- 카테고리 리스트 -->
-        <div class="my-3">
-            <h5>카테고리 선택</h5>
-            <div class="btn-group" role="group">
-                <a th:each="category : ${categoryList}"
-                   th:href="@{/course/trend(categoryId=${category.categoryId}, sortType=${sortType})}"
-                   th:text="${category.categoryName}"
-                   th:classappend="${selectedCategoryId == category.categoryId} ? 'btn-primary' : 'btn-outline-secondary'"
-                   class="btn">
-                </a>
+            <!-- 페이지 제목 -->
+            <div class="text-center my-4">
+                <h2 class="fw-bold">스포츠 강좌 추천</h2>
+                <p class="text-muted">선택하신 <span th:text="${responses.sido} + ${responses.sigugun}" />지역의 추천 강좌 리스트입니다.</p>
             </div>
         </div>
 
-        <!-- 코스 목록 카드 -->
-        <div class="row">
-            <div class="col-md-4 mb-4" th:each="course : ${courseList}">
-                <div class="card h-100 shadow-sm border-0">
-                    <!--                    <img th:src="" class="card-img-top" alt="Course Image" style="height: 200px; object-fit: cover;">-->
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title" th:text="${course.courseNm}" style="font-weight: bold; color: #333;">Course Name</h5>
-                        <p class="card-text text-muted" th:text="${course.category.categoryName}">Category</p>
-                        <p class="card-text text-primary" th:text="'Price: ' + ${course.coursePrc} + '원'">Price</p>
-                        <!-- Optional: 추가 정보 예시 -->
-                        <a th:href="@{/course/detail/{courseId}(courseId=${course.courseId})}" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>
+<!--        &lt;!&ndash; 코스 목록 카드 &ndash;&gt;-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-4 mb-4" th:each="course : ${courseList}">-->
+<!--                <div class="card h-100 shadow-sm border-0">-->
+<!--                    &lt;!&ndash;<img th:src="" class="card-img-top" alt="Course Image" style="height: 200px; object-fit: cover;">&ndash;&gt;-->
+<!--                    <div class="card-body d-flex flex-column">-->
+<!--                        <h5 class="card-title" th:text="${course.courseNm}" style="font-weight: bold; color: #333;">Course Name</h5>-->
+<!--                        <p class="card-text text-muted" th:text="${course.category.categoryName}">Category</p>-->
+<!--                        <p class="card-text text-primary" th:text="'Price: ' + ${course.coursePrc} + '원'">Price</p>-->
+<!--                        &lt;!&ndash; Optional: 추가 정보 예시 &ndash;&gt;-->
+<!--                        <a th:href="@{/course/detail/{courseId}(courseId=${course.courseId})}" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- 카테고리별 코스 목록 -->
+        <div th:each="entry : ${groupedCourses}">
+            <!-- 카테고리 제목 -->
+            <div class="my-4">
+                <h3 class="fw-bold" th:text="${entry.key}">카테고리 이름</h3>
+                <hr>
+            </div>
+
+            <!-- 해당 카테고리의 코스 카드 -->
+            <div class="row">
+                <div class="col-md-4 mb-4" th:each="course : ${entry.value}">
+                    <div class="card h-100 shadow-sm border-0">
+                        <!--<img th:src="" class="card-img-top" alt="Course Image" style="height: 200px; object-fit: cover;">-->
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title" th:text="${course.courseNm}" style="font-weight: bold; color: #333;">Course Name</h5>
+                            <p class="card-text text-muted" th:text="${course.category.categoryName}">Category</p>
+                            <p class="card-text text-primary" th:text="'Price: ' + ${course.coursePrc} + '원'">Price</p>
+                            <a th:href="@{/course/detail/{courseId}(courseId=${course.courseId})}" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <!-- 코스 목록이 없는 경우 -->
+<!--        <div class="text-center py-5" th:if="${courseList.size() == 0}">-->
+<!--            <h5 class="text-muted">선택하신 지역과 종목에 해당하는 추천 강좌가 없습니다. 지역을 다시 선택해 보세요!</h5>-->
+<!--            <button type="button" onclick="location.href='/update'" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>-->
+<!--        </div>-->
+
+        <!-- 코스 목록이 없는 경우 -->
+        <div class="text-center py-5" th:if="${groupedCourses.size() == 0}">
+            <h5 class="text-muted">선택하신 지역과 종목에 해당하는 추천 강좌가 없습니다. 지역을 다시 선택해 보세요!</h5>
+            <button type="button" onclick="location.href='/update'" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>
         </div>
     </div>
 
