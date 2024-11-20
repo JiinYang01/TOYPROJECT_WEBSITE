@@ -15,45 +15,42 @@
 
 <!--&lt;!&ndash;<div th:replace="fragments/navbar :: navbar"></div>&ndash;&gt;-->
 <!--<div th:insert="~{fragments/navbar :: navbar}"></div>-->
-<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
 <div layout:fragment="content" class="container my-3">
 
-    <!-- Header-->
-    <header class="bg-primary bg-gradient text-white">
-        <div class="container px-4 text-center">
-            <h1 class="fw-bolder" th:text="${welcomeMessage}">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
-            <p class="lead" th:text="${introMessage}">안내: 자기에게 맞는 스포츠 강좌를 ㅇㅇ사이트에서 알아보세요</p>
-            <p class="lead" th:text="${customerService}">고객센터: 010-1111-0000</p>
-        </div>
-    </header>
+<!-- Header-->
+<header class="bg-primary bg-gradient text-white">
+    <div class="container px-4 text-center">
+        <h1 class="fw-bolder" th:text="${welcomeMessage}">ㅇㅇㅇ사이트에 오신걸 환영합니다</h1>
+        <p class="lead" th:text="${introMessage}">안내: 자기에게 맞는 스포츠 강좌를 ㅇㅇ사이트에서 알아보세요</p>
+        <p class="lead" th:text="${customerService}">고객센터: 010-1111-0000</p>
+    </div>
+</header>
 
-    <!-- About section-->
-    <section id="about">
-        <div class="container px-4">
-            <div class="row gx-4 justify-content-center">
-                <div class="col-lg-8">
-                    <h2>About this page</h2>
-                    <p class="lead" th:text="${aboutDescription}">
-                        This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for your own landing page designs! This template features:
-                    </p>
-                    <ul>
-                        <div class="parent">
-                            <div class="child" th:text="${feature1}" onclick="location.href='/course/trend'" style="cursor: pointer;">스포트 트렌드 알아보기</div>
-                            <div class="space"></div>
-
-                            <div class="child" th:text="${feature2}" onclick="location.href='/surveypage'" style="cursor: pointer;">
-                                내게 맞는 스포츠 추천
-                            </div>
-
-
+<!-- About section-->
+<section id="about">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-lg-8">
+                <h2>About this page</h2>
+                <p class="lead" th:text="${aboutDescription}">
+                    This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for your own landing page designs! This template features:
+                </p>
+                <ul>
+                    <div class="parent">
+                        <div class="child" th:text="${feature1}" onclick="location.href='/course/trend'" style="cursor: pointer;">스포트 트렌드 알아보기</div>
+                        <div class="space"></div>
+                        <div class="child" th:text="${feature2}" onclick="location.href='/surveypage'" style="cursor: pointer;">
+                            내게 맞는 스포츠 추천
                         </div>
-                    </ul>
-                </div>
+                    </div>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Footer-->
+<!-- Footer-->
 </div>
 </html>

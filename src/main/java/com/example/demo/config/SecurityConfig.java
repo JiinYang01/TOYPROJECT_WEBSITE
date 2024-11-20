@@ -24,18 +24,18 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll() // 로그인 및 공개 페이지
-                        .requestMatchers("/surveypage", "/submitForm").authenticated() // "/survey" URL은 인증된 사용자만 접근
+                        .requestMatchers("/user/login", "/user/register", "/css/**", "/js/**").permitAll() // 로그인 및 공개 페이지
+                        .requestMatchers("/surveypage").authenticated() // "/survey" URL은 인증된 사용자만 접근
                         .anyRequest().permitAll()
                 )
                 .formLogin((formLogin) -> formLogin
-                        .loginPage("/login") // 로그인 페이지 설정
+                        .loginPage("/user/login") // 로그인 페이지 설정
                         .defaultSuccessUrl("/", true) // 로그인 성공 시 "/" 페이지로 리다이렉트
                         .permitAll()
                 )
                 .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 설정
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")) // 로그아웃 설정
+                        .logoutSuccessUrl("/user/login?logout")
                         .permitAll()
                 );
 

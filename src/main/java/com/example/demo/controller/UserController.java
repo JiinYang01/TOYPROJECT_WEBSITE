@@ -1,30 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.SportsCourseDTO;
-import com.example.demo.DTO.SurveyDTO;
+import com.example.demo.DTO.LoginForm;
 import com.example.demo.DTO.UserCreateDTO;
 import com.example.demo.DTO.UserCreateForm;
-import com.example.demo.domain.CustomUserDetails;
-import com.example.demo.domain.SurveyResponse;
-import com.example.demo.domain.User;
-import com.example.demo.service.CustomUserDetailsService;
-import com.example.demo.service.SurveyService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,8 +20,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final CustomUserDetailsService detailsService;
-    private final SurveyService surveyService;
+
     @GetMapping("/register")
     public String register(UserCreateForm userCreateForm) {
         return "signup";
@@ -64,20 +51,13 @@ public class UserController {
             return "signup";
         }
 
-        return "redirect:/login";
+        return "redirect:/user/login";
     }
 
-
-
-
-
-//    @PostMapping("/recommendpage")
-//    public String recommendpage(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-//        Long userId = user.getUserId();
-////       List<SurveyResponse> responses = surveyService.getResponsesByUserId(user);
-////       model.addAttribute("responses", responses);
-////       System.out.println(model);
-//        return "course_recommend"; // course_recommend.html 템플릿으로 이동
-//    }
+    @GetMapping("/login")
+    public String showLoginPage(Model model) {
+        model.addAttribute("loginForm", new LoginForm()); // LoginForm 객체를 모델에 추가
+        return "login"; // login.html 템플릿으로 이동
+    }
 
 }
