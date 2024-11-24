@@ -31,7 +31,7 @@ public class SportsCourseController {
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
                        @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "size", defaultValue = "10") int size,
+                       @RequestParam(value = "size", defaultValue = "12") int size,
                        Model model) {
         Page<SportsCourseDTO> coursePage = courseService.getFilteredCourses(categoryId, sortType, ctprvn, signgu, page, size);
         List<CategoryDTO> categoryList = this.categoryService.getList();
@@ -53,7 +53,7 @@ public class SportsCourseController {
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
                        @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "size", defaultValue = "10") int size,
+                       @RequestParam(value = "size", defaultValue = "12") int size,
                        Model model) {
         List<CategoryDTO> categoryList = this.categoryService.getList();
         //내코드
