@@ -18,7 +18,7 @@
                class="btn btn-light me-2" th:classappend="${sortType1 == 'disabled'} ? 'active' : ''">장애인</a>
         </div>
         <div class="my-3">
-            <a th:href="@{/course/disabledtrend(sortType='priceAsc', categoryId=${selectedCategoryId})}"
+            <a th:href="@{/course/trend(sortType='priceAsc', categoryId=${selectedCategoryId})}"
                class="btn btn-light me-2" th:classappend="${sortType == 'priceAsc'} ? 'active' : ''">가격순</a>
             <a th:href="@{/course/trend(sortType='priceDesc', categoryId=${selectedCategoryId})}"
                class="btn btn-light me-2" th:classappend="${sortType == 'priceDesc'} ? 'active' : ''">가격 역순</a>
