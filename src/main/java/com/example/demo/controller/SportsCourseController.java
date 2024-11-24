@@ -25,8 +25,8 @@ public class SportsCourseController {
     private final CategoryService categoryService;
 
     @GetMapping("/trend")
-    public String list(@RequestParam(name = "sortType", defaultValue = "true") String sortType1,
-                       @RequestParam(name = "sortType", defaultValue = "All") String sortType,
+    public String list(@RequestParam(name = "sortType", defaultValue = "All") String sortType,
+                       @RequestParam(name = "sortType1", defaultValue = "abled") String sortType1,
                        @RequestParam(name = "categoryId", required = false) Long categoryId,
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
@@ -38,16 +38,17 @@ public class SportsCourseController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("sortType", sortType);
-        model.addAttribute("sortType1", sortType1);
         model.addAttribute("ctprvn", ctprvn);
         model.addAttribute("signgu", signgu);
         model.addAttribute("coursePage", coursePage);
+        model.addAttribute("sortType1", sortType1);
         //model.addAttribute("keyword", keyword);
         return "course_trend";
     }
 
     @GetMapping("/disabledtrend")
     public String list1(@RequestParam(name = "sortType", defaultValue = "All") String sortType,
+                        @RequestParam(name = "sortType1", defaultValue = "disabled") String sortType1,
                        @RequestParam(name = "categoryId", required = false) Long categoryId,
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
@@ -63,6 +64,7 @@ public class SportsCourseController {
         model.addAttribute("ctprvn", ctprvn);
         model.addAttribute("signgu", signgu);
         model.addAttribute("disabledcoursePage", disabledcoursePage);
+        model.addAttribute("sortType1", sortType1);
         //model.addAttribute("keyword", keyword);
         return "disabledcourse_trend";
     }
