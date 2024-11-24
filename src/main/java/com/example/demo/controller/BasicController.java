@@ -30,7 +30,7 @@ public class BasicController {
     public String hi(Model model,@AuthenticationPrincipal CustomUserDetails user) {
 
         model.addAttribute("title", "사이트 제목");
-        model.addAttribute("brandName", "BBB");
+       // model.addAttribute("brandName", "BBB");
         model.addAttribute("welcomeMessage", "사이트에 오신 것을 환영합니다");
         model.addAttribute("introMessage", "자기에게 맞는 스포츠 강좌를 알아보세요");
         model.addAttribute("customerService", "고객센터: 010-1111-0000");
@@ -57,9 +57,7 @@ public class BasicController {
         if(!surveyService.getUserId(user)){
             return "surveypage";}
         else{
-            SurveyDTO response = surveyService.getResponsesByUserId(user);
-            model.addAttribute("responses", response);
-            return "course_recommend";
+            return "redirect:/recommend/";
         }
     }
 
