@@ -88,9 +88,7 @@ public class BasicController {
 //        Long userId = Long.parseLong(authentication.getName());
 //
 //        System.out.println(userId);
-
         surveyService.saveSurveyResponse(surveyForm,user);
-
         SurveyDTO response = surveyService.getResponsesByUserId(user);
         model.addAttribute("responses", response);
         System.out.println(model);

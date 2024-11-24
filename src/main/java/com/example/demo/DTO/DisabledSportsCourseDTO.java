@@ -1,7 +1,12 @@
 package com.example.demo.DTO;
 
 import com.example.demo.domain.Category;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class DisabledSportsCourseDTO {
     private Long courseId;
     private String courseNm;

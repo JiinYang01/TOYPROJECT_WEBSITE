@@ -29,8 +29,25 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     private SportsCourseDTO EntityToDTO(SportsCourse entity) {
         return new SportsCourseDTO(entity.getCourseId(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
+
+
+
+
+
 }

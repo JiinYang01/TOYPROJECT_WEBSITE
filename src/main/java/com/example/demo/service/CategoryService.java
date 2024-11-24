@@ -28,4 +28,9 @@ public class CategoryService {
     private CategoryDTO EntityToDTO(Category entity) {
         return new CategoryDTO(entity.getCategoryId(), entity.getCategoryName());
     }
+
+    //지인 코드
+
+
+
 }

@@ -31,6 +31,15 @@ public class SportsCourseService {
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
 
+    public SportsCourseDTO getCourseById(Long courseId) {
+        SportsCourse sportsCourse = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
+
+        return EntityToDTO(sportsCourse);
+    }
+
+
+
     public Page<SportsCourseDTO> getFilteredCourses(Long categoryId, String sortType, String ctprvn, String signgu, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("courseNm").ascending());
         Page<SportsCourse> coursesPage = null;
@@ -108,12 +117,7 @@ public class SportsCourseService {
             return coursesPage.map(this::EntityToDTO);
     }
 
-    public SportsCourseDTO getCourseById(Long courseId) {
-        SportsCourse sportsCourse = courseRepository.findById(courseId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID: " + courseId));
 
-        return EntityToDTO(sportsCourse);
-    }
 
 //    public List<SportsCourseDTO> searchCourses(String keyword) {
 //        List<SportsCourse> courseList = courseRepository.findByCourseNmContainingIgnoreCase(keyword);
