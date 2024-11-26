@@ -18,7 +18,6 @@ public class Category {
     private Long categoryId;
     @Column(unique = true)
     private String categoryName;
-//    @OneToMany
-//    private List<SportsCourse> CourseList;
-
+    @Column(name = "file_url")
+    private String fileUrl;
 }

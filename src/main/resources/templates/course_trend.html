@@ -1,5 +1,5 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
-<div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
+<div layout:fragment="content" class="container my-3" style="margin-top: 80px;">
     <div class="container my-4">
         <!-- 검색 필드 -->
         <div class="my-3" style="padding-top:80px;">
@@ -37,10 +37,6 @@
                     <select id="sigugun" name="signgu" th:value="${signgu}">
                         <option value="">시군구 선택</option>
                     </select>
-                    <!--                <a th:href="@{/course/trend(categoryId=${selectedCategoryId}, sortType=${sortType}, ctprvn=${ctprvn}, signgu=${signgu})}"-->
-                    <!--                   th:text="검색"-->
-                    <!--                   class="btn">-->
-                    <!--                </a>-->
                 </div>
                 <button type="submit" class="btn btn-primary">검색</button>
             </form>
@@ -77,7 +73,7 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <div class="pagination mt-4">
+        <div class="pagination mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
             <a th:href="@{/course/search(keyword=${keyword}, page=${coursePage.number - 1}, size=${coursePage.size})}"
                th:if="${coursePage.hasPrevious()}" class="btn btn-secondary me-2">이전</a>
             <span th:text="'페이지 ' + ${coursePage.number + 1} + ' / ' + ${coursePage.totalPages}"></span>

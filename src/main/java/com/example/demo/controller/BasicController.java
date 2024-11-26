@@ -34,7 +34,7 @@ public class BasicController {
         model.addAttribute("welcomeMessage", "사이트에 오신 것을 환영합니다");
         model.addAttribute("introMessage", "자기에게 맞는 스포츠 강좌를 알아보세요");
         model.addAttribute("customerService", "고객센터: 010-1111-0000");
-        model.addAttribute("aboutDescription", "이 페이지는 웹페이지 설명입니다.");
+        model.addAttribute("aboutDescription", "고객에게 맞는 스포츠강좌를 추천해주는 서비스입니다. 회원가입을 하고 편하게 나에게 맞는 강좌를 찾아보세요.");
         model.addAttribute("feature1", "스포츠 트렌드 알아보기");
         model.addAttribute("feature2", "내게 맞는 스포츠 추천");
         if (user!=null){
@@ -78,18 +78,10 @@ public class BasicController {
 
     @PostMapping("/submitForm")
     public String submitSurveyForm(@ModelAttribute SurveyForm surveyForm, @AuthenticationPrincipal CustomUserDetails user, RedirectAttributes redirectAttributes, Model model) {
-        // Use the injected service
-//        redirectAttributes.addFlashAttribute("message", "Survey submitted successfully!");
-//        return "redirect:/";
-
-//        var authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Long userId = Long.parseLong(authentication.getName());
-//
-//        System.out.println(userId);
         surveyService.saveSurveyResponse(surveyForm,user);
-        SurveyDTO response = surveyService.getResponsesByUserId(user);
-        model.addAttribute("responses", response);
-        System.out.println(model);
-        return "course_recommend";
+//        SurveyDTO response = surveyService.getResponsesByUserId(user);
+//        model.addAttribute("responses", response);
+//        System.out.println(model);
+        return "redirect:/recommend/";
     }
 }

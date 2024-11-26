@@ -10,7 +10,7 @@
     <link href="css/surveypage.css" rel="stylesheet" />
 </head>
 <body>
-    <form th:action="@{/submitForm}" th:object="${surveyForm}" method="post" style="padding-top: 240px;">
+    <form id="sportsForm" th:action="@{/submitForm}" th:object="${surveyForm}" method="post" style="padding-top: 80px;">
         <h2 th:text="${formTitle}">맞춤형 스포츠 강좌</h2>
         <div>
             <strong>장애인/비장애인 여부</strong>
@@ -27,10 +27,6 @@
                 <option value="">시군구 선택</option>
                 <!-- Add options here -->
             </select>
-<!--            <select th:field="*{dong}" id="dong">-->
-<!--                <option value="">동 선택</option>-->
-<!--                &lt;!&ndash; Add options here &ndash;&gt;-->
-<!--            </select>-->
         </div>
         <div>
             <strong>단체/개인 스포츠 선호도</strong>
@@ -49,13 +45,13 @@
             <strong>선호 스포츠 고르기(3가지 이상)</strong>
             <div class="checkbox-group">
                 <div th:each="sport : ${sports}">
-                    <input type="checkbox" th:field="*{preferredSports}" th:value="${sport.categoryId}" th:id="${sport}">
+                    <input type="checkbox" th:field="*{preferredSports}" th:value="${sport.categoryId}" th:id="${sport}" onchange="validateSelection()">
                     <label th:for="${sport}" th:text="${sport.categoryName}">스포츠</label>
                 </div>
             </div>
         </div>
         <div>
-            <button type="submit" onclick="location.href='/recommend/'" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>
+            <button type="submit" id="submitButton" onclick="return handleButtonClick(event)" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>
         </div>
     </form>
 
@@ -89,7 +85,38 @@
             });
         });
     </script>
+    <script>
+        function validateSelection() {
+            // 체크된 체크박스 개수를 계산
+            const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+            const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
 
+            // 버튼의 활성화 상태를 관리하기 위한 데이터 속성 업데이트
+            const submitButton = document.getElementById('submitButton');
+            if (checkedCount >= 3) {
+                submitButton.dataset.enabled = "true"; // 활성화 상태
+            } else {
+                submitButton.dataset.enabled = "false"; // 비활성화 상태
+            }
+        }
+
+        function handleButtonClick(event) {
+            const submitButton = document.getElementById('submitButton');
+
+            // 버튼이 활성화 상태인지 확인
+            if (submitButton.dataset.enabled === "true") {
+                // 3개 이상 선택한 경우: 폼 제출 허용
+                return true; // 폼 제출 동작을 계속 진행
+            } else {
+                // 선택이 부족할 경우 알림만 표시
+                alert("3가지 이상 골라주세요.");
+                return false; // 폼 제출 동작을 막음
+            }
+        }
+
+        // 페이지 로드 시 초기 상태 초기화
+        document.addEventListener("DOMContentLoaded", validateSelection);
+    </script>
 </body>
 </html>
 

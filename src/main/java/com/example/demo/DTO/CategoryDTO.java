@@ -10,9 +10,11 @@ public class CategoryDTO {
 
     private Long categoryId;
     private String categoryName;
+    private String fileUrl;
 
-    public CategoryDTO(Long categoryId, String categoryName) {
+    public CategoryDTO(Long categoryId, String categoryName, String fileUrl) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+        this.fileUrl = fileUrl;
     }
 }

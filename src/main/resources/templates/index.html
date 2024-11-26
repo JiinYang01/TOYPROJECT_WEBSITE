@@ -38,10 +38,12 @@
                     This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for your own landing page designs! This template features:
                 </p>
                 <ul>
-                    <div class="parent">
-                        <div class="child" th:text="${feature1}" onclick="location.href='/course/trend'" style="cursor: pointer;">스포트 트렌드 알아보기</div>
+                    <div class="parent" style="display: flex; justify-content: space-between; flex-direction: row;">
+                        <div class="child" th:text="${feature1}" onclick="location.href='/course/trend'" style="cursor: pointer; display: flex; justify-content: center; align-items: center;font-size: 1.5em;">
+                            스포트 트렌드 알아보기
+                        </div>
                         <div class="space"></div>
-                        <div class="child" th:text="${feature2}" onclick="location.href='/surveypage'" style="cursor: pointer;">
+                        <div class="child" th:text="${feature2}" onclick="location.href='/surveypage'" style="cursor: pointer; display: flex; justify-content: center; align-items: center;font-size: 1.5em;">
                             내게 맞는 스포츠 추천
                         </div>
                     </div>

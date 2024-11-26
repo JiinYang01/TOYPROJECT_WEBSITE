@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class SportsCourseDTO {
     private Long courseId;
-    private String courseNm;
+    private String courseNm;      //계절별트랜드
     private Category category;
     private String fcltyName;
     private String ctprvnNm;
@@ -18,9 +18,9 @@ public class SportsCourseDTO {
     private String fcltyAddr;
     private String fcltyDetailAddr;
     private String telNo;
-    private String courseBeginDe;
-    private String courseEndDe;
-    private Long courseReqstNmprCo;
+    private String courseBeginDe;         //계절별트랜드
+    private String courseEndDe;           //계절별트랜드
+    private Long courseReqstNmprCo;         //계절별트랜드
     private Long coursePrc;
 
     public SportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {

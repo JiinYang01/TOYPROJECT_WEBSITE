@@ -119,14 +119,6 @@ public class SportsCourseService {
 
 
 
-//    public List<SportsCourseDTO> searchCourses(String keyword) {
-//        List<SportsCourse> courseList = courseRepository.findByCourseNmContainingIgnoreCase(keyword);
-//
-//        return courseList.stream()
-//                .map(this::EntityToDTO) // 메서드 레퍼런스 사용
-//                .collect(Collectors.toList());
-//    }
-
     public Page<SportsCourseDTO> searchCourses(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("courseNm").ascending());
         Page<SportsCourse> coursePage = courseRepository.findByCourseNmContainingIgnoreCase(keyword, pageable);
