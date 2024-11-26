@@ -87,9 +87,11 @@ public class BasicController {
 //
 //        System.out.println(userId);
         surveyService.saveSurveyResponse(surveyForm,user);
-        SurveyDTO response = surveyService.getResponsesByUserId(user);
-        model.addAttribute("responses", response);
-        System.out.println(model);
-        return "course_recommend";
+//        SurveyDTO response = surveyService.getResponsesByUserId(user);
+//        model.addAttribute("responses", response);
+//        System.out.println(model);
+//        return "course_recommend";
+
+        return "redirect:/recommend/";
     }
 }

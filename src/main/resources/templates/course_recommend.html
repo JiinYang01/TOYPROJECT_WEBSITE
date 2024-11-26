@@ -11,22 +11,6 @@
             </div>
         </div>
 
-<!--        &lt;!&ndash; 코스 목록 카드 &ndash;&gt;-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-4 mb-4" th:each="course : ${courseList}">-->
-<!--                <div class="card h-100 shadow-sm border-0">-->
-<!--                    &lt;!&ndash;<img th:src="" class="card-img-top" alt="Course Image" style="height: 200px; object-fit: cover;">&ndash;&gt;-->
-<!--                    <div class="card-body d-flex flex-column">-->
-<!--                        <h5 class="card-title" th:text="${course.courseNm}" style="font-weight: bold; color: #333;">Course Name</h5>-->
-<!--                        <p class="card-text text-muted" th:text="${course.category.categoryName}">Category</p>-->
-<!--                        <p class="card-text text-primary" th:text="'Price: ' + ${course.coursePrc} + '원'">Price</p>-->
-<!--                        &lt;!&ndash; Optional: 추가 정보 예시 &ndash;&gt;-->
-<!--                        <a th:href="@{/course/detail/{courseId}(courseId=${course.courseId})}" class="btn btn-primary mt-auto" style="width: 100%;">자세히 보기</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
         <!-- 카테고리별 코스 목록 -->
         <div th:each="entry : ${groupedCourses}">
             <!-- 카테고리 제목 -->
@@ -51,15 +35,8 @@
             </div>
         </div>
 
-
         <!-- 코스 목록이 없는 경우 -->
-<!--        <div class="text-center py-5" th:if="${courseList.size() == 0}">-->
-<!--            <h5 class="text-muted">선택하신 지역과 종목에 해당하는 추천 강좌가 없습니다. 지역을 다시 선택해 보세요!</h5>-->
-<!--            <button type="button" onclick="location.href='/update'" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>-->
-<!--        </div>-->
-
-        <!-- 코스 목록이 없는 경우 -->
-        <div class="text-center py-5" th:if="${groupedCourses.size() == 0}">
+        <div class="text-center py-5" th:if="${groupedCourses?.size() == 0}">
             <h5 class="text-muted">선택하신 지역과 종목에 해당하는 추천 강좌가 없습니다. 지역을 다시 선택해 보세요!</h5>
             <button type="button" onclick="location.href='/update'" style="cursor: pointer;">맞춤형강좌 알아보러가기</button>
         </div>
