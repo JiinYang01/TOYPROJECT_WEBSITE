@@ -56,7 +56,6 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
             @Param("preferredSports3") Long categoryId3,
             @Param("sido") String sido,
             @Param("sigugun") String sigugun,
-            @Param("price") Long price,
-            Pageable pageable);
+            @Param("price") Long price);
 
 }

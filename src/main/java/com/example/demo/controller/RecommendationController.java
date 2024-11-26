@@ -32,12 +32,6 @@ public class RecommendationController {
         SurveyDTO response = surveyService.getResponsesByUserId(user);
         model.addAttribute("responses", response);
 
-//        List<String> categoryList = courses.stream()
-//                .map(course -> course.getCategory().getCategoryName())
-//                .distinct()
-//                .collect(Collectors.toList());
-//        model.addAttribute("categoryList", categoryList);
-
         // 카테고리별로 코스를 그룹화
         Map<String, List<SportsCourseDTO>> groupedCourses = courses.stream()
                 .collect(Collectors.groupingBy(course -> course.getCategory().getCategoryName()));
