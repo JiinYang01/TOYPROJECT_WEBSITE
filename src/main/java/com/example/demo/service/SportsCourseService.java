@@ -129,7 +129,21 @@ public class SportsCourseService {
             return coursePage.map(this::EntityToDTO);
     }
 
-
+    public List<SportsCourseDTO> getFilteredData(String ctprvn, String signgu) {
+        if ("전체".equals(ctprvn) && "전체".equals(signgu)) {
+            return courseRepository.findAll().stream()
+                    .map(this::EntityToDTO) // 메서드 레퍼런스 사용
+                    .collect(Collectors.toList());
+        } else if ("전체".equals(signgu)) {
+            return courseRepository.findByCtprvnNm(ctprvn).stream()
+                    .map(this::EntityToDTO)
+                    .collect(Collectors.toList());
+        } else {
+            return courseRepository.findByCtprvnNmAndSignguNm(ctprvn, signgu).stream()
+                    .map(this::EntityToDTO)
+                    .collect(Collectors.toList());
+        }
+    }
 
 
 }

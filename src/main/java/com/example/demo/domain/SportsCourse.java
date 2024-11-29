@@ -33,6 +33,11 @@ public class SportsCourse implements Serializable {
     private Long courseReqstNmprCo;
     private Long coursePrc;
 
+    @Transient // DB에 없는 필드로 쿼리 결과에서만 사용
+    private Long row_num;
+    @Transient // DB에 없는 필드로 쿼리 결과에서만 사용
+    private Long totalReqstNmprCo;
+
     public SportsCourse(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
         this.courseId = courseId;
         this.courseNm = courseNm;

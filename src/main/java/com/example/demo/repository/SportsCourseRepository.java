@@ -58,4 +58,24 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
             @Param("sigugun") String sigugun,
             @Param("price") Long price);
 
+//    @Query(value = """
+//        WITH RankedCourses AS (
+//            SELECT
+//                ROW_NUMBER() OVER (PARTITION BY course_nm, fclty_detail_addr ORDER BY course_end_de DESC) AS row_num,
+//                SUM(course_reqst_nmpr_co) OVER (PARTITION BY course_nm, fclty_detail_addr) AS total_reqst_nmpr_co,
+//                t1.course_id AS courseId,
+//                t1.course_nm AS courseNm,
+//                t1.fclty_detail_addr AS fcltyDetailAddr,
+//                t1.course_end_de AS courseEndDe,
+//                t1.course_reqst_nmpr_co AS courseReqstNmprCo
+//            FROM sports_course t1
+//        )
+//        SELECT *
+//        FROM RankedCourses
+//        WHERE row_num = 1
+//    """, nativeQuery = true)
+//    List<SportsCourse> findLatestCoursesWithSum();
+
+    List<SportsCourse> findByCtprvnNm(String ctprvnNm);
+    List<SportsCourse> findByCtprvnNmAndSignguNm(String ctprvnNm, String signguNm);
 }
