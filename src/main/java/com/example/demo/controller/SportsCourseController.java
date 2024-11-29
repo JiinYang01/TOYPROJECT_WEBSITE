@@ -10,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Controller
@@ -114,4 +116,42 @@ public class SportsCourseController {
         return "course_detail";
     }
 
+    @ResponseBody
+    @GetMapping("/region/api/chart-data")
+    public Map<String, Object> getChartData(
+            @RequestParam(name="ctprvn", required = false, defaultValue = "전체") String ctprvn,
+            @RequestParam(name="signgu", required = false, defaultValue = "전체") String signgu) {
+
+        // 필터링된 데이터 가져오기
+        List<SportsCourseDTO> filteredData = courseService.getFilteredData(ctprvn, signgu);
+
+        // 데이터를 카테고리별로 그룹화하고, 값을 합산
+        Map<String, Long> groupedData = filteredData.stream()
+                .collect(Collectors.groupingBy(
+                        course -> course.getCategory().getCategoryName(), // 카테고리별 그룹화
+                        Collectors.summingLong(SportsCourseDTO::getCourseReqstNmprCo) // 값을 합산
+                ));
+
+        // 그룹화된 데이터를 labels와 values 리스트로 분리
+        List<String> labels = new ArrayList<>(groupedData.keySet());
+        List<Long> values = new ArrayList<>(groupedData.values());
+
+        // 응답 데이터 구성
+        Map<String, Object> response = new HashMap<>();
+        response.put("labels", labels);
+        response.put("values", values);
+        return response;
+    }
+
+    @GetMapping("/region/dashboard")
+    public String showDashboard(Model model) {
+        // 예제 데이터: 실제로는 데이터베이스나 서비스에서 데이터를 가져옵니다.
+        List<CategoryDTO> categoryList = this.categoryService.getList();
+
+        // Model에 데이터 추가
+        model.addAttribute("categories", categoryList);
+
+        // Thymeleaf 템플릿 파일 이름 (resources/templates/sports-dashboard.html)
+        return "region_dashboard";
+    }
 }

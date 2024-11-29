@@ -1,0 +1,172 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">-->
+<div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">지역별 스포츠 강좌 트렌드</h1>
+
+        <!-- Filters -->
+<!--        <div class="row mb-4">-->
+<!--            <div class="col-md-6">-->
+<!--                <label for="regionSelect" class="form-label">지역 선택</label>-->
+<!--                <select id="regionSelect" class="form-select">-->
+<!--                    <option value="전체">전체</option>-->
+<!--                    <option th:each="region : ${regions}" th:value="${region}" th:text="${region}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- 지역 선택 필터 -->
+<!--        <div class="my-3">-->
+<!--            <h5>지역 선택</h5>-->
+<!--            <form th:action="@{/course/region/api/chart-data}" method="get" class="d-flex">-->
+<!--                <div class="btn-group" role="group">-->
+<!--                    <select id="sido" name="ctprvn" th:value="${ctprvn}">-->
+<!--                        <option value="">시도 선택</option>-->
+<!--                    </select>-->
+<!--                    <select id="sigugun" name="signgu" th:value="${signgu}">-->
+<!--                        <option value="">시군구 선택</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">검색</button>-->
+<!--            </form>-->
+<!--        </div>-->
+        <div class="my-3">
+            <h5>지역 선택</h5>
+            <form id="regionForm" class="d-flex" onsubmit="return false;">
+                <div class="btn-group" role="group">
+                    <select id="sido" name="ctprvn">
+                        <option value="">시도 선택</option>
+                    </select>
+                    <select id="sigugun" name="signgu">
+                        <option value="">시군구 선택</option>
+                    </select>
+                </div>
+                <button type="button" id="searchButton" class="btn btn-primary">검색</button>
+            </form>
+        </div>
+
+
+        <!-- Bar Chart Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title text-center">인기 스포츠 강좌 순위</h5>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heatmap Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title text-center">지역별 이용률 히트맵</h5>
+                <div class="heatmap">
+                    <!-- 히트맵을 여기에 추가하거나 지도로 대체 -->
+                    <img src="https://via.placeholder.com/800x400?text=Heatmap+Placeholder" class="img-fluid" alt="Heatmap">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidoSelect = $('#sido');
+            const sigugunSelect = $('#sigugun');
+            const searchButton = document.getElementById('searchButton');
+
+            const ctx = document.getElementById('barChart').getContext('2d');
+            let chartInstance;
+
+            function renderChart(data, labels) {
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '이용자 수',
+                            data: data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '이용자 수'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '강좌 이름'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateChart() {
+                const ctprvn = sidoSelect.val();
+                const signgu = sigugunSelect.val();
+
+                console.log(`Fetching data for ctprvn=${ctprvn}, signgu=${signgu}`);
+
+                fetch(`/course/region/api/chart-data?ctprvn=${ctprvn}&signgu=${signgu}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderChart(data.values, data.labels);
+                    })
+                    .catch(error => console.error('Error fetching chart data:', error));
+
+                console.log('fetched');
+            }
+
+            // 행정구역 데이터 초기화
+            hangjungdong.sido.forEach(item => {
+                sidoSelect.append(new Option(item.codeNm, item.sido));
+            });
+
+            sidoSelect.change(function () {
+                sigugunSelect.empty().append(new Option("시군구 선택", ""));
+                const selectedSido = $(this).val();
+                const sigugunList = hangjungdong.sigugun.filter(item => item.sido === selectedSido);
+
+                sigugunList.forEach(item => {
+                    sigugunSelect.append(new Option(item.codeNm, item.codeNm));
+                });
+
+                const tmp = $("select[name=ctprvn] option:selected").text();
+                $("select[name=ctprvn] option:selected").attr('value', tmp);
+                console.log($(this).val());
+            });
+
+            // 검색 버튼 클릭 시 차트 업데이트
+            searchButton.addEventListener('click', updateChart);
+
+            // 초기 차트 렌더링
+            updateChart();
+        });
+
+    </script>
+</div>
+</html>
