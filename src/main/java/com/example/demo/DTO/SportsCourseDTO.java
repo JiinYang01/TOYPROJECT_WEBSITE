@@ -3,11 +3,13 @@ package com.example.demo.DTO;
 import com.example.demo.domain.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Builder
 public class SportsCourseDTO {
     private Long courseId;
     private String courseNm;      //계절별트랜드

@@ -2,21 +2,20 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.CategoryDTO;
 import com.example.demo.DTO.DisabledSportsCourseDTO;
+import com.example.demo.DTO.SeasonalCourseDataDTO;
 import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.DisabledSportsCourseService;
 import com.example.demo.service.SportsCourseService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Controller
@@ -154,4 +153,58 @@ public class SportsCourseController {
         // Thymeleaf 템플릿 파일 이름 (resources/templates/sports-dashboard.html)
         return "region_dashboard";
     }
+
+
+
+//    @GetMapping("/seasonal")
+//    public String getSeasonalDashboardByYear(Model model) {
+//        List<SeasonalCourseDataDTO> seasonalData = courseService.getSeasonalCourseDataByYear();
+//
+//        // 년도 목록 생성 (null 값 제거)
+//        List<String> years = seasonalData.stream()
+//                .map(SeasonalCourseDataDTO::getYear)
+//                .filter(Objects::nonNull) // null 값 제거
+//                .distinct()
+//                .sorted()
+//                .collect(Collectors.toList());
+//
+//        // 모델에 데이터 추가
+////        System.out.println("Seasonal Data Size: " + seasonalData.size());
+//
+////        System.out.println("Seasonal Data: " + seasonalData);
+//        System.out.println("Model Seasonal Data: " + model.getAttribute("seasonalData"));
+//
+////        model.addAttribute("seasonalData", seasonalData);
+//        model.addAttribute("years", years);
+//
+//        return "seasons_dashboard";
+//    }
+
+
+    @GetMapping("/seasonal")
+    public String getSeasonalDashboardByYear(Model model) {
+
+        List<SeasonalCourseDataDTO> seasonalData = courseService.getSeasonalCourseDataByYear();
+
+        if (seasonalData == null || seasonalData.isEmpty()) {
+            System.out.println("No data found for seasonalData.");
+        }
+
+        List<String> years = seasonalData.stream()
+                .map(SeasonalCourseDataDTO::getYear)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+
+        model.addAttribute("seasonalData", seasonalData);
+        model.addAttribute("years", years);
+
+        return "seasons_dashboard";
+    }
+
+
+
+
 }

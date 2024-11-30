@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Seasonal Data Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>계절별 및 종목별 수강인원</h1>
+
+    <!-- 데이터를 Thymeleaf로 JSON 형식으로 전달 -->
+    <script th:inline="javascript">
+      const seasonalData = /*[[${seasonalData}]]*/ [];
+    </script>
+
+    <!-- 필터 -->
+    <div>
+      <label for="year-select">Select Year:</label>
+      <select id="year-select">
+        <option value="all">All Years</option>
+      </select>
+
+      <label for="season-select">Select Season:</label>
+      <select id="season-select">
+        <option value="all">All Seasons</option>
+        <option value="Winter">Winter</option>
+        <option value="Spring">Spring</option>
+        <option value="Summer">Summer</option>
+        <option value="Autumn">Autumn</option>
+      </select>
+    </div>
+
+    <!-- 그래프 캔버스 -->
+    <canvas id="seasonalChart" style="max-width: 1200px; max-height: 800px;"></canvas>
+
+    <script>
+      // 데이터셋: Thymeleaf에서 전달된 JSON 파싱
+      const parsedData = seasonalData;
+
+      // HTML Select 필터에 년도 추가
+      const years = [...new Set(parsedData.map(item => item.year))].filter(year => year).sort();
+      const yearSelect = document.getElementById('year-select');
+      years.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+      });
+
+      // 그래프 업데이트 함수
+      const ctx = document.getElementById("seasonalChart").getContext("2d");
+      let chartInstance = null;
+
+      function updateChart(selectedYear, selectedSeason) {
+        // 데이터 필터링
+        let filteredData = parsedData;
+        if (selectedYear !== "all") {
+          filteredData = filteredData.filter(item => item.year === selectedYear);
+        }
+        if (selectedSeason !== "all") {
+          filteredData = filteredData.filter(item => item.season === selectedSeason);
+        }
+
+        // 데이터를 그룹화
+        const groupedData = {};
+        filteredData.forEach(item => {
+          if (!groupedData[item.categoryName]) {
+            groupedData[item.categoryName] = 0;
+          }
+          groupedData[item.categoryName] += item.totalRequestCount;
+        });
+
+        // 그래프 데이터 구성
+        const categories = Object.keys(groupedData);
+        const data = categories.map(category => groupedData[category]);
+
+        const chartData = {
+          labels: categories,
+          datasets: [
+            {
+              label: "Total Request Count",
+              data: data,
+              backgroundColor: categories.map(() => getRandomColor()),
+            },
+          ],
+        };
+
+        // 기존 차트를 삭제하고 새로 생성
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
+          type: "bar",
+          data: chartData,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: `Participation in ${selectedYear !== "all" ? selectedYear : "All Years"} (${selectedSeason !== "all" ? selectedSeason : "All Seasons"})`,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Total Request Count",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // 랜덤 색상 생성기
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      // 초기 그래프 로드
+      updateChart("all", "all");
+
+      // 필터 이벤트 핸들러
+      yearSelect.addEventListener("change", () => {
+        const selectedYear = yearSelect.value;
+        const selectedSeason = document.getElementById("season-select").value;
+        updateChart(selectedYear, selectedSeason);
+      });
+
+      document.getElementById("season-select").addEventListener("change", () => {
+        const selectedYear = yearSelect.value;
+        const selectedSeason = document.getElementById("season-select").value;
+        updateChart(selectedYear, selectedSeason);
+      });
+    </script>
+  </body>
+</html>

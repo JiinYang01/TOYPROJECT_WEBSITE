@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.CategoryDTO;
+import com.example.demo.DTO.SeasonalCourseDataDTO;
 import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.domain.SportsCourse;
 import com.example.demo.repository.SportsCourseRepository;
@@ -144,6 +146,21 @@ public class SportsCourseService {
                     .collect(Collectors.toList());
         }
     }
+
+
+    public List<SeasonalCourseDataDTO> getSeasonalCourseDataByYear() {
+        List<Object[]> results = courseRepository.findSeasonalCourseDataByYear();
+        return results.stream()
+                .map(r -> new SeasonalCourseDataDTO(
+                        (String) r[0], // categoryName
+                        (String) r[1], // year
+                        (String) r[2], // season
+                        ((Number) r[3]).longValue())) // totalRequestCount
+                .collect(Collectors.toList());
+    }
+
+
+
 
 
 }

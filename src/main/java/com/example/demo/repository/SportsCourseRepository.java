@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.DTO.SeasonalCourseDataDTO;
 import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.domain.SportsCourse;
 import org.springframework.data.domain.Page;
@@ -78,4 +79,26 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
 
     List<SportsCourse> findByCtprvnNm(String ctprvnNm);
     List<SportsCourse> findByCtprvnNmAndSignguNm(String ctprvnNm, String signguNm);
+
+
+
+
+    @Query(value = "SELECT c.category_name AS categoryName, " +
+            "SUBSTRING(sc.course_begin_de, 1, 4) AS year, " +
+            "CASE " +
+            "   WHEN SUBSTRING(sc.course_begin_de, 5, 2) IN ('12', '01', '02') THEN 'Winter' " +
+            "   WHEN SUBSTRING(sc.course_begin_de, 5, 2) IN ('03', '04', '05') THEN 'Spring' " +
+            "   WHEN SUBSTRING(sc.course_begin_de, 5, 2) IN ('06', '07', '08') THEN 'Summer' " +
+            "   WHEN SUBSTRING(sc.course_begin_de, 5, 2) IN ('09', '10', '11') THEN 'Autumn' " +
+            "END AS season, " +
+            "SUM(sc.course_reqst_nmpr_co) AS totalRequestCount " +
+            "FROM sports_course sc " +
+            "JOIN category c ON sc.category_id = c.category_id " +
+            "GROUP BY c.category_name, SUBSTRING(sc.course_begin_de, 1, 4), season",
+            nativeQuery = true)
+    List<Object[]> findSeasonalCourseDataByYear();
+
+
+
+
 }
