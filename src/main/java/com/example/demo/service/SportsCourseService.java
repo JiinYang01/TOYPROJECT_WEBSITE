@@ -22,14 +22,13 @@ public class SportsCourseService {
 
     public List<SportsCourseDTO> getList() {
         List<SportsCourse> courseList = courseRepository.findAll();
-
         return courseList.stream()
                 .map(this::EntityToDTO) // 메서드 레퍼런스 사용
                 .collect(Collectors.toList());
     }
 
     private SportsCourseDTO EntityToDTO(SportsCourse entity) {
-        return new SportsCourseDTO(entity.getCourseId(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
+        return new SportsCourseDTO(entity.getCourseId(), entity.getRownum(), entity.getCrsenum(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
 
@@ -60,10 +59,10 @@ public class SportsCourseService {
             }
         } else if (categoryId == null && ctprvn == null){
             switch (sortType) {
-                case "priceAsc" -> coursesPage = courseRepository.findAllByOrderByCoursePrcAsc(pageable);
-                case "priceDesc" -> coursesPage = courseRepository.findAllByOrderByCoursePrcDesc(pageable);
-                case "popularity" -> coursesPage = courseRepository.findAllByOrderByCourseReqstNmprCoDesc(pageable);
-                default -> coursesPage = courseRepository.findAll(pageable);
+                case "priceAsc" -> coursesPage = courseRepository.findByrownumOrderByCoursePrcAsc(1L,pageable);
+                case "priceDesc" -> coursesPage = courseRepository.findByrownumOrderByCoursePrcDesc(1L,pageable);
+                case "popularity" -> coursesPage = courseRepository.findByrownumOrderByCourseReqstNmprCoDesc(1L,pageable);
+                default -> coursesPage = courseRepository.findByRownum(1L,pageable);
             }
         } else if (categoryId != null) {
             if (signgu == null || signgu.isEmpty()) {

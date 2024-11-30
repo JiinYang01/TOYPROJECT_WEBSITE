@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SportsCourseDTO {
     private Long courseId;
+    private Long rownum;
+    private  Long crsenum;
     private String courseNm;      //계절별트랜드
     private Category category;
     private String fcltyName;
@@ -25,8 +27,10 @@ public class SportsCourseDTO {
     private Long courseReqstNmprCo;         //계절별트랜드
     private Long coursePrc;
 
-    public SportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
+    public SportsCourseDTO(Long courseId,Long rownum,Long crsenum, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
         this.courseId = courseId;
+        this.crsenum=crsenum;
+        this.rownum=rownum;
         this.courseNm = courseNm;
         this.category = category;
         this.fcltyName = fcltyName;

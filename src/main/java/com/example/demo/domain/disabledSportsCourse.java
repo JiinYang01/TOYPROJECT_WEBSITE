@@ -12,7 +12,8 @@ public class disabledSportsCourse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
-
+    private Long rownum;
+    private Long crsenum;
     private String courseNm;
 
     @ManyToOne
@@ -45,6 +46,8 @@ public class disabledSportsCourse implements Serializable {
         this.courseReqstNmprCo = courseReqstNmprCo;
         this.coursePrc = coursePrc;
         this.trobltyNM=trobltyNM;
+        this.rownum=rownum;
+        this.crsenum=crsenum;
     }
 
 }

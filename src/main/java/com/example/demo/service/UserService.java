@@ -23,7 +23,5 @@ public class UserService {
         return new User(dto.getEmail(), passwordEncoder.encode(dto.getPassword()), dto.getUserName(), dto.getDisabled());
     }
 
-
-    
     
 }
