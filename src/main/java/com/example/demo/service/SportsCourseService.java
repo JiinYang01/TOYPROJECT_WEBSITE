@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.DTO.CategoryDTO;
 import com.example.demo.DTO.SeasonalCourseDataDTO;
 import com.example.demo.DTO.SportsCourseDTO;
 import com.example.demo.domain.SportsCourse;
@@ -28,7 +27,7 @@ public class SportsCourseService {
     }
 
     private SportsCourseDTO EntityToDTO(SportsCourse entity) {
-        return new SportsCourseDTO(entity.getCourseId(), entity.getRownum(), entity.getCrsenum(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
+        return new SportsCourseDTO(entity.getCourseId(), entity.getRowNum(), entity.getCrseNum(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
 
@@ -59,10 +58,10 @@ public class SportsCourseService {
             }
         } else if (categoryId == null && ctprvn == null){
             switch (sortType) {
-                case "priceAsc" -> coursesPage = courseRepository.findByrownumOrderByCoursePrcAsc(1L,pageable);
-                case "priceDesc" -> coursesPage = courseRepository.findByrownumOrderByCoursePrcDesc(1L,pageable);
-                case "popularity" -> coursesPage = courseRepository.findByrownumOrderByCourseReqstNmprCoDesc(1L,pageable);
-                default -> coursesPage = courseRepository.findByRownum(1L,pageable);
+                case "priceAsc" -> coursesPage = courseRepository.findByRowNumOrderByCoursePrcAsc(1L,pageable);
+                case "priceDesc" -> coursesPage = courseRepository.findByRowNumOrderByCoursePrcDesc(1L,pageable);
+                case "popularity" -> coursesPage = courseRepository.findByRowNumOrderByCourseReqstNmprCoDesc(1L,pageable);
+                default -> coursesPage = courseRepository.findByRowNum(1L,pageable);
             }
         } else if (categoryId != null) {
             if (signgu == null || signgu.isEmpty()) {

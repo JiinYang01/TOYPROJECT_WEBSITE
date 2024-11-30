@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -16,8 +15,8 @@ public class SportsCourse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
-    private Long rownum;
-    private Long crsenum;
+    private Long rowNum;
+    private Long crseNum;
     private String courseNm;
 
     @ManyToOne
@@ -39,10 +38,10 @@ public class SportsCourse implements Serializable {
     @Transient // DB에 없는 필드로 쿼리 결과에서만 사용
     private Long totalReqstNmprCo;
 
-    public SportsCourse(Long courseId,Long rownum,Long crsenum,String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
+    public SportsCourse(Long courseId, Long rowNum, Long crseNum, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
         this.courseId = courseId;
-        this.rownum=rownum;
-        this.crsenum=crsenum;
+        this.rowNum = rowNum;
+        this.crseNum = crseNum;
         this.courseNm = courseNm;
         this.category = category;
         this.fcltyName = fcltyName;

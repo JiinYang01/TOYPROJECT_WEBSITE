@@ -5,14 +5,10 @@ import com.example.demo.DTO.SurveyDTO;
 import com.example.demo.domain.CustomUserDetails;
 import com.example.demo.domain.SportsCourse;
 import com.example.demo.repository.SportsCourseRepository;
-import com.example.demo.repository.SurveyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +52,7 @@ public class RecommendationService {
     }
 
     private SportsCourseDTO EntityToDTO(SportsCourse entity) {
-        return new SportsCourseDTO(entity.getCourseId(), entity.getRownum(), entity.getCrsenum(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
+        return new SportsCourseDTO(entity.getCourseId(), entity.getRowNum(), entity.getCrseNum(), entity.getCourseNm(), entity.getCategory(), entity.getFcltyName(), entity.getCtprvnNm(), entity.getSignguNm(),
                 entity.getFcltyAddr(), entity.getFcltyDetailAddr(), entity.getTelNo(), entity.getCourseBeginDe(), entity.getCourseEndDe(), entity.getCourseReqstNmprCo(), entity.getCoursePrc());
     }
 
