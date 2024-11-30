@@ -53,14 +53,14 @@ public class SportsCourseService {
                 case "priceDesc" ->
                         coursesPage = courseRepository.findByCategory_CategoryIdOrderByCoursePrcDesc(categoryId, pageable);
                 case "popularity" ->
-                        coursesPage = courseRepository.findByCategory_CategoryIdOrderByCourseReqstNmprCoDesc(categoryId, pageable);
+                        coursesPage = courseRepository.findByCategory_CategoryIdOrderByCrseNumDesc(categoryId, pageable);
                 default -> coursesPage = courseRepository.findByCategory_CategoryId(categoryId, pageable);
             }
         } else if (categoryId == null && ctprvn == null){
             switch (sortType) {
                 case "priceAsc" -> coursesPage = courseRepository.findByRowNumOrderByCoursePrcAsc(1L,pageable);
                 case "priceDesc" -> coursesPage = courseRepository.findByRowNumOrderByCoursePrcDesc(1L,pageable);
-                case "popularity" -> coursesPage = courseRepository.findByRowNumOrderByCourseReqstNmprCoDesc(1L,pageable);
+                case "popularity" -> coursesPage = courseRepository.findByRowNumOrderByCrseNumDesc(1L,pageable);
                 default -> coursesPage = courseRepository.findByRowNum(1L,pageable);
             }
         } else if (categoryId != null) {
@@ -71,7 +71,7 @@ public class SportsCourseService {
                     case "priceDesc" ->
                             coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcDesc(categoryId, ctprvn, pageable);
                     case "popularity" ->
-                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn, pageable);
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmOrderByCrseNumDesc(categoryId, ctprvn, pageable);
                     default ->
                             coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNm(categoryId, ctprvn, pageable);
                 }
@@ -82,7 +82,7 @@ public class SportsCourseService {
                     case "priceDesc" ->
                             coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcDesc(categoryId, ctprvn, signgu, pageable);
                     case "popularity" ->
-                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(categoryId, ctprvn, signgu, pageable);
+                            coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCrseNumDesc(categoryId, ctprvn, signgu, pageable);
                     default ->
                             coursesPage = courseRepository.findByCategory_CategoryIdAndCtprvnNmAndSignguNm(categoryId, ctprvn, signgu, pageable);
                 }
@@ -95,7 +95,7 @@ public class SportsCourseService {
                     case "priceDesc" ->
                             coursesPage = courseRepository.findByCtprvnNmOrderByCoursePrcDesc(ctprvn, pageable);
                     case "popularity" ->
-                            coursesPage = courseRepository.findByCtprvnNmOrderByCourseReqstNmprCoDesc(ctprvn, pageable);
+                            coursesPage = courseRepository.findByCtprvnNmOrderByCrseNumDesc(ctprvn, pageable);
                     default -> coursesPage = courseRepository.findByCtprvnNm(ctprvn, pageable);
                 }
             } else {
@@ -105,7 +105,7 @@ public class SportsCourseService {
                     case "priceDesc" ->
                             coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCoursePrcDesc(ctprvn, signgu, pageable);
                     case "popularity" ->
-                            coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(ctprvn, signgu, pageable);
+                            coursesPage = courseRepository.findByCtprvnNmAndSignguNmOrderByCrseNumDesc(ctprvn, signgu, pageable);
                     default -> coursesPage = courseRepository.findByCtprvnNmAndSignguNm(ctprvn, signgu, pageable);
                 }
             }

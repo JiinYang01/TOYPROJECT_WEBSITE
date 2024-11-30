@@ -16,14 +16,14 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     /////////////////////////////////////////////////////////////////////////////////
     Page<SportsCourse> findByRowNumOrderByCoursePrcAsc(Long rowNum, Pageable pageable);
     Page<SportsCourse> findByRowNumOrderByCoursePrcDesc(Long rowNum, Pageable pageable);
-    Page<SportsCourse> findByRowNumOrderByCourseReqstNmprCoDesc(Long rowNum, Pageable pageable);
+    Page<SportsCourse> findByRowNumOrderByCrseNumDesc(Long rowNum, Pageable pageable);
     ///////////////////////////////////////////////////////////////////////////////////
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId ORDER BY sc.coursePrc ASC")
     Page<SportsCourse> findByCategory_CategoryIdOrderByCoursePrcAsc(@Param("categoryId")Long categoryId, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId ORDER BY sc.coursePrc DESC")
     Page<SportsCourse> findByCategory_CategoryIdOrderByCoursePrcDesc(@Param("categoryId")Long categoryId, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId")
-    Page<SportsCourse> findByCategory_CategoryIdOrderByCourseReqstNmprCoDesc(@Param("categoryId")Long categoryId, Pageable pageable);
+    Page<SportsCourse> findByCategory_CategoryIdOrderByCrseNumDesc(@Param("categoryId")Long categoryId, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId")
     Page<SportsCourse> findByCategory_CategoryId(@Param("categoryId")Long categoryId, Pageable pageable);
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,14 +37,14 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmOrderByCoursePrcDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, Pageable pageable);
     // CategoryId와 CtprvnNm로 필터링하고 요청 인원수 내림차순 정렬
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId AND sc.ctprvnNm = :ctprvnNm ORDER BY sc.courseReqstNmprCo DESC")
-    Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmOrderByCourseReqstNmprCoDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, Pageable pageable);
+    Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmOrderByCrseNumDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, Pageable pageable);
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm ORDER BY sc.coursePrc ASC")
     Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcAsc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm ORDER BY sc.coursePrc DESC")
     Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCoursePrcDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm ORDER BY sc.courseReqstNmprCo DESC")
-    Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
+    Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmAndSignguNmOrderByCrseNumDesc(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.category.categoryId = :categoryId AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm")
     Page<SportsCourse> findByCategory_CategoryIdAndCtprvnNmAndSignguNm(@Param("categoryId") Long categoryId, @Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
 
@@ -54,7 +54,7 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.ctprvnNm = :ctprvnNm ORDER BY sc.coursePrc DESC")
     Page<SportsCourse> findByCtprvnNmOrderByCoursePrcDesc(@Param("ctprvnNm") String ctprvnNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.ctprvnNm = :ctprvnNm ORDER BY sc.courseReqstNmprCo DESC")
-    Page<SportsCourse> findByCtprvnNmOrderByCourseReqstNmprCoDesc(@Param("ctprvnNm") String ctprvnNm, Pageable pageable);
+    Page<SportsCourse> findByCtprvnNmOrderByCrseNumDesc(@Param("ctprvnNm") String ctprvnNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.ctprvnNm = :ctprvnNm")
     Page<SportsCourse> findByCtprvnNm(@Param("ctprvnNm") String ctprvnNm, Pageable pageable);
 
@@ -70,7 +70,7 @@ public interface SportsCourseRepository extends JpaRepository<SportsCourse, Long
 
 
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm ORDER BY sc.courseReqstNmprCo DESC")
-    Page<SportsCourse> findByCtprvnNmAndSignguNmOrderByCourseReqstNmprCoDesc(@Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
+    Page<SportsCourse> findByCtprvnNmAndSignguNmOrderByCrseNumDesc(@Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE sc.rowNum = 1 AND sc.ctprvnNm = :ctprvnNm AND sc.signguNm = :signguNm")
     Page<SportsCourse> findByCtprvnNmAndSignguNm(@Param("ctprvnNm") String ctprvnNm, @Param("signguNm") String signguNm, Pageable pageable);
     @Query("SELECT sc FROM SportsCourse sc WHERE LOWER(sc.courseNm) LIKE LOWER(CONCAT('%', :keyword, '%')) AND sc.rowNum = 1")
