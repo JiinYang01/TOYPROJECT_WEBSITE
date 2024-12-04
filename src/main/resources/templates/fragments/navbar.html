@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" sec:authorize="!isAuthenticated()">
-        <a class="nav-link" th:href="@{/explain}">사이트 설명</a>
+        <a class="nav-link" th:href="@{/explain}">이용권 설명</a>
         </li>
         <!-- 인증되지 않은 사용자에게 "로그인" 링크 표시 -->
         <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -19,7 +19,7 @@
         <!-- 인증된 사용자에게 "로그아웃" 링크 표시 -->
         <li class="nav-item" sec:authorize="isAuthenticated()">
         <li>
-        <a class="nav-link" th:href="@{/explain}" sec:authorize="isAuthenticated()">사이트 설명</a>
+        <a class="nav-link" th:href="@{/explain}" sec:authorize="isAuthenticated()">이용권 설명</a>
         </li>
 
             <li>
