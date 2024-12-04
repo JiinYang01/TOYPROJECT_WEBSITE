@@ -73,12 +73,22 @@
         </div>
 
         <!-- 페이지네이션 -->
+<!--        <div class="pagination mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">-->
+<!--            <a th:href="@{/course/search(keyword=${keyword}, page=${coursePage.number - 1}, size=${coursePage.size})}"-->
+<!--               th:if="${coursePage.hasPrevious()}" class="btn btn-secondary me-2">이전</a>-->
+<!--            <span th:text="'페이지 ' + ${coursePage.number + 1} + ' / ' + ${coursePage.totalPages}"></span>-->
+<!--            <a th:href="@{/course/search(keyword=${keyword}, page=${coursePage.number + 1}, size=${coursePage.size})}"-->
+<!--               th:if="${coursePage.hasNext()}" class="btn btn-secondary ms-2">다음</a>-->
+<!--        </div>-->
         <div class="pagination mt-4" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-            <a th:href="@{/course/search(keyword=${keyword}, page=${coursePage.number - 1}, size=${coursePage.size})}"
-               th:if="${coursePage.hasPrevious()}" class="btn btn-secondary me-2">이전</a>
-            <span th:text="'페이지 ' + ${coursePage.number + 1} + ' / ' + ${coursePage.totalPages}"></span>
-            <a th:href="@{/course/search(keyword=${keyword}, page=${coursePage.number + 1}, size=${coursePage.size})}"
-               th:if="${coursePage.hasNext()}" class="btn btn-secondary ms-2">다음</a>
+            <!-- 이전 페이지 버튼 -->
+            <a th:href="${prevPageUrl}" th:if="${prevPageUrl != null}" class="btn btn-secondary me-2">이전</a>
+
+            <!-- 현재 페이지 / 전체 페이지 -->
+            <span th:text="'페이지 ' + (${coursePage.number + 1}) + ' / ' + ${coursePage.totalPages}"></span>
+
+            <!-- 다음 페이지 버튼 -->
+            <a th:href="${nextPageUrl}" th:if="${nextPageUrl != null}" class="btn btn-secondary ms-2">다음</a>
         </div>
     </div>
 
