@@ -1,5 +1,6 @@
 <!-- navbar.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" th:fragment="navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" th:fragment="navbar"
+     xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
   <div class="container px-4">
     <a class="navbar-brand" th:href="@{/}" th:text="BBB"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,6 +8,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item" sec:authorize="!isAuthenticated()">
+        <a class="nav-link" th:href="@{/explain}">사이트 설명</a>
+        </li>
         <!-- 인증되지 않은 사용자에게 "로그인" 링크 표시 -->
         <li class="nav-item" sec:authorize="!isAuthenticated()">
           <a class="nav-link" th:href="@{/user/login}">로그인</a>
@@ -14,7 +18,9 @@
 
         <!-- 인증된 사용자에게 "로그아웃" 링크 표시 -->
         <li class="nav-item" sec:authorize="isAuthenticated()">
-
+        <li>
+        <a class="nav-link" th:href="@{/explain}" sec:authorize="isAuthenticated()">사이트 설명</a>
+        </li>
 
             <li>
             <a class="nav-link" th:href="@{/update}" th:text="${havesurvey}" sec:authorize="isAuthenticated()"></a>

@@ -84,4 +84,13 @@ public class BasicController {
 //        System.out.println(model);
         return "redirect:/recommend/";
     }
+    @GetMapping("/explain")
+    public String explain( ) {
+
+        return "/explain";
+    }
+
+
+
+
 }
