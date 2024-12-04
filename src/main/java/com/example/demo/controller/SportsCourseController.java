@@ -43,6 +43,8 @@ public class SportsCourseController {
         model.addAttribute("signgu", signgu);
         model.addAttribute("coursePage", coursePage);
         model.addAttribute("sortType1", sortType1);
+        model.addAttribute("feature3","종목별 인기종목 도표로 보기");
+        model.addAttribute("feature4","계절별 인기종목 도표로 보기");
         //model.addAttribute("keyword", keyword);
         return "course_trend";
     }
@@ -155,30 +157,6 @@ public class SportsCourseController {
     }
 
 
-
-//    @GetMapping("/seasonal")
-//    public String getSeasonalDashboardByYear(Model model) {
-//        List<SeasonalCourseDataDTO> seasonalData = courseService.getSeasonalCourseDataByYear();
-//
-//        // 년도 목록 생성 (null 값 제거)
-//        List<String> years = seasonalData.stream()
-//                .map(SeasonalCourseDataDTO::getYear)
-//                .filter(Objects::nonNull) // null 값 제거
-//                .distinct()
-//                .sorted()
-//                .collect(Collectors.toList());
-//
-//        // 모델에 데이터 추가
-////        System.out.println("Seasonal Data Size: " + seasonalData.size());
-//
-////        System.out.println("Seasonal Data: " + seasonalData);
-//        System.out.println("Model Seasonal Data: " + model.getAttribute("seasonalData"));
-//
-////        model.addAttribute("seasonalData", seasonalData);
-//        model.addAttribute("years", years);
-//
-//        return "seasons_dashboard";
-//    }
 
 
     @GetMapping("/seasonal")

@@ -1,5 +1,7 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-3" style="margin-top: 80px;">
+
+
     <div class="container my-4">
         <!-- 검색 필드 -->
         <div class="my-3" style="padding-top:80px;">
@@ -10,21 +12,44 @@
             </form>
         </div>
 
+<!--        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">-->
+<!--            <div class="custom-button" th:text="${feature3}" onclick="location.href='/course/region/dashboard'" style="cursor: pointer; background-color: #add8e6; color: black; padding: 8px 20px; border-radius: 5px; text-align: center; font-size: 1.2em; width: fit-content;">-->
+<!--                종목별 인기종목 도표로 보기-->
+<!--            </div>-->
+<!--            <div class="custom-button" th:text="${feature4}" onclick="location.href='/course/seasonal'" style="cursor: pointer; background-color: #add8e6; color: black; padding: 8px 20px; border-radius: 5px; text-align: center; font-size: 1.2em; width: fit-content;">-->
+<!--                계절별 인기종목 도표로 보기-->
+<!--            </div>-->
+<!--        </div>-->
+
+
         <!-- 필터 버튼 -->
-        <div class="my-3">
-            <a th:href="@{/course/trend}"
-               class="btn btn-light me-2" th:classappend="${sortType1 == 'abled'} ? 'active' : ''">비장애인</a>
-            <a th:href="@{/course/disabledtrend}"
-               class="btn btn-light me-2" th:classappend="${sortType1 == 'disabled'} ? 'active' : ''">장애인</a>
+        <div class="my-3" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <a th:href="@{/course/trend}" class="btn btn-light me-2" th:classappend="${sortType1 == 'abled'} ? 'active' : ''">비장애인</a>
+                <a th:href="@{/course/disabledtrend}" class="btn btn-light me-2" th:classappend="${sortType1 == 'disabled'} ? 'active' : ''">장애인</a>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <div class="custom-button" th:text="${feature3}" onclick="location.href='/course/region/dashboard'" style="cursor: pointer; background-color: #add8e6; color: black; padding: 8px 20px; border-radius: 5px; text-align: center; font-size: 1.2em; width: fit-content;">
+                    종목별 인기종목 도표로 보기
+                </div>
+                <div class="custom-button" th:text="${feature4}" onclick="location.href='/course/seasonal'" style="cursor: pointer; background-color: #add8e6; color: black; padding: 8px 20px; border-radius: 5px; text-align: center; font-size: 1.2em; width: fit-content;">
+                    계절별 인기종목 도표로 보기
+                </div>
+            </div>
         </div>
-        <div class="my-3">
-            <a th:href="@{/course/trend(sortType='priceAsc', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'priceAsc'} ? 'active' : ''">가격순</a>
-            <a th:href="@{/course/trend(sortType='priceDesc', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'priceDesc'} ? 'active' : ''">가격 역순</a>
-            <a th:href="@{/course/trend(sortType='popularity', categoryId=${selectedCategoryId})}"
-               class="btn btn-light me-2" th:classappend="${sortType == 'popularity'} ? 'active' : ''">인기순</a>
+
+
+        <div class="my-3" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <a th:href="@{/course/trend(sortType='priceAsc', categoryId=${selectedCategoryId})}" class="btn btn-light me-2" th:classappend="${sortType == 'priceAsc'} ? 'active' : ''">가격순</a>
+                <a th:href="@{/course/trend(sortType='priceDesc', categoryId=${selectedCategoryId})}" class="btn btn-light me-2" th:classappend="${sortType == 'priceDesc'} ? 'active' : ''">가격 역순</a>
+                <a th:href="@{/course/trend(sortType='popularity', categoryId=${selectedCategoryId})}" class="btn btn-light me-2" th:classappend="${sortType == 'popularity'} ? 'active' : ''">인기순</a>
+            </div>
+<!--            <div class="custom-button" th:text="${feature4}" onclick="location.href='/course/seasonal'" style="cursor: pointer; background-color: #add8e6; color: black; padding: 8px 20px; border-radius: 5px; text-align: center; font-size: 1.2em; width: fit-content;">-->
+<!--                계절별 인기종목 도표로 보기-->
+<!--            </div>-->
         </div>
+
 
         <!-- 지역 선택 필터 -->
         <div class="my-3">
