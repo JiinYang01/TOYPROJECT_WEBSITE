@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import com.example.demo.DTO.CategoryDTO;
 import com.example.demo.DTO.DisabledSportsCourseDTO;
 import com.example.demo.DTO.SeasonalCourseDataDTO;
@@ -16,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/course")
@@ -51,6 +49,7 @@ public class SportsCourseController {
     public String list(@RequestParam(name = "sortType", defaultValue = "All") String sortType,
                        @RequestParam(name = "sortType1", defaultValue = "abled") String sortType1,
                        @RequestParam(name = "categoryId", required = false) Long categoryId,
+                       @RequestParam(name = "crsenum", required = false) Long crsenum,
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
                        @RequestParam(value = "page", defaultValue = "0") int page,
@@ -108,15 +107,29 @@ public class SportsCourseController {
                        Model model) {
         List<CategoryDTO> categoryList = this.categoryService.getList();
         //내코드
+
         Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.getFilteredCourses(categoryId, sortType, ctprvn, signgu, page, size);
+        // Pagination 및 필터링 URL 생성
+        String currentUrl = generateUrl(sortType, sortType1, categoryId, ctprvn, signgu, page, size);
+        String nextPageUrl = page < disabledcoursePage.getTotalPages() - 1
+                ? generateUrl(sortType, sortType1, categoryId, ctprvn, signgu, page + 1, size)
+                : null;
+        String prevPageUrl = page > 0
+                ? generateUrl(sortType, sortType1, categoryId, ctprvn, signgu, page - 1, size)
+                : null;
+
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("sortType", sortType);
+
         model.addAttribute("ctprvn", ctprvn);
         model.addAttribute("signgu", signgu);
         model.addAttribute("disabledcoursePage", disabledcoursePage);
         model.addAttribute("sortType1", sortType1);
         //model.addAttribute("keyword", keyword);
+        model.addAttribute("currentUrl", currentUrl);
+        model.addAttribute("nextPageUrl", nextPageUrl);
+        model.addAttribute("prevPageUrl", prevPageUrl);
         return "disabledcourse_trend";
     }
 
