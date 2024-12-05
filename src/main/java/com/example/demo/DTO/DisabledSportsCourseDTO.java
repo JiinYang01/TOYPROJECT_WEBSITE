@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class DisabledSportsCourseDTO {
     private Long courseId;
+    private Long rowNum;
+    private  Long crseNum;
     private String courseNm;
     private Category category;
     private String fcltyName;
@@ -21,11 +23,13 @@ public class DisabledSportsCourseDTO {
     private String courseEndDe;
     private Long courseReqstNmprCo;
     private Long coursePrc;
-    private String trobltyNM;
 
-    public DisabledSportsCourseDTO(Long courseId, String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc,String trobltyNM) {
+
+    public DisabledSportsCourseDTO(Long courseId,  Long rowNum, Long crseNum,String courseNm, Category category, String fcltyName, String ctprvnNm, String signguNm, String fcltyAddr, String fcltyDetailAddr, String telNo, String courseBeginDe, String courseEndDe, Long courseReqstNmprCo, Long coursePrc) {
         this.courseId = courseId;
         this.courseNm = courseNm;
+        this.crseNum = crseNum;
+        this.rowNum = rowNum;
         this.category = category;
         this.fcltyName = fcltyName;
         this.ctprvnNm = ctprvnNm;
@@ -37,6 +41,6 @@ public class DisabledSportsCourseDTO {
         this.courseEndDe = courseEndDe;
         this.courseReqstNmprCo = courseReqstNmprCo;
         this.coursePrc = coursePrc;
-        this.trobltyNM=trobltyNM;
+
     }
 }

@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import com.example.demo.DTO.CategoryDTO;
 import com.example.demo.DTO.DisabledSportsCourseDTO;
 import com.example.demo.DTO.SeasonalCourseDataDTO;
@@ -16,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/course")
@@ -51,6 +49,7 @@ public class SportsCourseController {
     public String list(@RequestParam(name = "sortType", defaultValue = "All") String sortType,
                        @RequestParam(name = "sortType1", defaultValue = "abled") String sortType1,
                        @RequestParam(name = "categoryId", required = false) Long categoryId,
+                       @RequestParam(name = "crsenum", required = false) Long crsenum,
                        @RequestParam(name = "ctprvn", required = false) String ctprvn,
                        @RequestParam(name = "signgu", required = false) String signgu,
                        @RequestParam(value = "page", defaultValue = "0") int page,
@@ -80,8 +79,6 @@ public class SportsCourseController {
         model.addAttribute("currentUrl", currentUrl);
         model.addAttribute("nextPageUrl", nextPageUrl);
         model.addAttribute("prevPageUrl", prevPageUrl);
-
-        model.addAttribute("sortType1", sortType1);
         model.addAttribute("feature3","종목별 인기종목 도표로 보기");
         model.addAttribute("feature4","계절별 인기종목 도표로 보기");
         //model.addAttribute("keyword", keyword);
@@ -101,6 +98,22 @@ public class SportsCourseController {
                 .toUriString();
     }
 
+    private String generateUrl1(String sortType, String sortType1, Long categoryId, String ctprvn, String signgu, int page, int size) {
+        return UriComponentsBuilder.fromPath("/course/disabledtrend")
+                .queryParam("sortType1", sortType)
+                .queryParam("sortType", sortType1)
+                .queryParamIfPresent("categoryId", Optional.ofNullable(categoryId))
+                .queryParamIfPresent("ctprvn", Optional.ofNullable(ctprvn))
+                .queryParamIfPresent("signgu", Optional.ofNullable(signgu))
+                .queryParam("page", page)
+                .queryParam("size", size)
+                .toUriString();
+    }
+
+
+
+
+
     @GetMapping("/disabledtrend")
     public String list1(@RequestParam(name = "sortType", defaultValue = "All") String sortType,
                         @RequestParam(name = "sortType1", defaultValue = "disabled") String sortType1,
@@ -110,18 +123,24 @@ public class SportsCourseController {
                        @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "size", defaultValue = "12") int size,
                        Model model) {
-        List<CategoryDTO> categoryList = this.categoryService.getList();
-        //내코드
-        Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.getFilteredCourses(categoryId, sortType, ctprvn, signgu, page, size);
-        model.addAttribute("categoryList", categoryList);
-        model.addAttribute("selectedCategoryId", categoryId);
-        model.addAttribute("sortType", sortType);
-        model.addAttribute("ctprvn", ctprvn);
-        model.addAttribute("signgu", signgu);
-        model.addAttribute("disabledcoursePage", disabledcoursePage);
-        model.addAttribute("sortType1", sortType1);
-        //model.addAttribute("keyword", keyword);
-        return "disabledcourse_trend";
+        {
+            Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.getFilteredCourses(categoryId, sortType1, ctprvn, signgu, page, size);
+            List<CategoryDTO> categoryList = categoryService.getList();
+            String currentUrl = generateUrl1(sortType1, sortType, categoryId, ctprvn, signgu, page, size);
+            String nextPageUrl = page < disabledcoursePage.getTotalPages() - 1 ? generateUrl1(sortType1, sortType, categoryId, ctprvn, signgu, page + 1, size) : null;
+            String prevPageUrl = page > 0 ? generateUrl1(sortType1, sortType, categoryId, ctprvn, signgu, page - 1, size) : null;
+            model.addAttribute("categoryList", categoryList); model.addAttribute("selectedCategoryId", categoryId);
+            model.addAttribute("sortType", sortType);
+            model.addAttribute("sortType1", sortType1);
+            model.addAttribute("ctprvn", ctprvn);
+            model.addAttribute("signgu", signgu);
+            model.addAttribute("disabledcoursePage", disabledcoursePage);
+            model.addAttribute("currentUrl", currentUrl);
+            model.addAttribute("nextPageUrl", nextPageUrl);
+            model.addAttribute("prevPageUrl", prevPageUrl);
+            model.addAttribute("feature3","종목별 인기종목 도표로 보기");
+            model.addAttribute("feature4","계절별 인기종목 도표로 보기");
+            return "disabledcourse_trend";}
     }
 
 
@@ -140,10 +159,13 @@ public class SportsCourseController {
                                 @RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "size", defaultValue = "10") int size,
                                 Model model) {
+        List<CategoryDTO> categoryList = this.categoryService.getList();
         Page<SportsCourseDTO> coursePage = courseService.searchCourses(keyword, page, size);
         model.addAttribute("coursePage", coursePage);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("keyword", keyword);
-
+        model.addAttribute("feature3","종목별 인기종목 도표로 보기");
+        model.addAttribute("feature4","계절별 인기종목 도표로 보기");
         return "course_trend";
     }
 
@@ -152,10 +174,13 @@ public class SportsCourseController {
                                 @RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "size", defaultValue = "10") int size,
                                 Model model) {
+        List<CategoryDTO> categoryList = this.categoryService.getList();
         Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.searchCourses(keyword, page, size);
         model.addAttribute("disabledcoursePage", disabledcoursePage);
         model.addAttribute("keyword", keyword);
-
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("feature3","종목별 인기종목 도표로 보기");
+        model.addAttribute("feature4","계절별 인기종목 도표로 보기");
         return "disabledcourse_trend";
     }
 
