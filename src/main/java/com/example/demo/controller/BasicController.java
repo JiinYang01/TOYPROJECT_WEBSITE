@@ -33,7 +33,7 @@ public class BasicController {
        // model.addAttribute("brandName", "BBB");
         model.addAttribute("welcomeMessage", "BBB 사이트에 오신 것을 환영합니다");
         model.addAttribute("introMessage", "자기에게 맞는 스포츠 강좌를 알아보세요");
-        model.addAttribute("aboutDescription", "고객에게 맞는 스포츠강좌를 추천해주는 서비스입니다. 회원가입을 하고 편하게 나에게 맞는 강좌를 찾아보세요.");
+        model.addAttribute("aboutDescription", "※스포츠강좌를 추천해주는 서비스입니다. 회원가입을 통해 나에게 맞는 강좌를 찾아보세요※");
         model.addAttribute("feature1", "스포츠 트렌드 알아보기");
         model.addAttribute("feature2", "내게 맞는 스포츠 추천");
         model.addAttribute("feature3","종목별 인기종목 도표로 보기");

@@ -17,11 +17,13 @@
             <div class="col-lg-8">
 <!--                <h2>About this page</h2>-->
                 <div class="text-center mb-4">
-                    <img src="../img/고양이.webp" alt="Cute Cat" class="img-fluid" style="max-width: 40%; height: 50%; border-radius: 10px;">
+                    <img src="../img/고양이.webp" alt="Cute Cat" class="img-fluid" style="max-width: 40%; height: 50%; border-radius: 10px;margin-top:-100px;">
                 </div>
-                <p class="lead" th:text="${aboutDescription}">
-                    This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for your own landing page designs! This template features:
+                <p class="lead" th:text="${aboutDescription}" style="color:red;">
+                    This is a great place to talk about your webpage.
                 </p>
+                <h5>@스포츠 트렌드 알아보기를 통해 종목 및 계절별 트렌드를 확인할 수 있습니다@</h5>
+                <h5>@내게 맞는 스포츠 추천은 설문조사를 통해서 내게맞는 스포츠를 추천받을 수 있습니다@</h5>
                 <ul>
                     <div class="parent" style="display: flex; justify-content: space-between; flex-direction: row;">
                         <div class="child" th:text="${feature1}" onclick="location.href='/course/trend'" style="cursor: pointer; display: flex; justify-content: center; align-items: center;font-size: 1.5em;">
