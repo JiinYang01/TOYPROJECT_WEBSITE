@@ -31,7 +31,6 @@ public class RecommendationService {
 //                .collect(Collectors.toList());
 //두달전으로 해서 정보가 너무 안나옴..
 
-        System.out.println("추천 courseList: " + courseList);
         return courseList.stream()
 //                .filter(sc -> {
 //                    try {
