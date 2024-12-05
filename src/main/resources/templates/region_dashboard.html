@@ -2,34 +2,7 @@
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">-->
 <div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
     <div class="container mt-5">
-        <h1 class="text-center mb-4">지역별 스포츠 강좌 트렌드</h1>
-
-        <!-- Filters -->
-<!--        <div class="row mb-4">-->
-<!--            <div class="col-md-6">-->
-<!--                <label for="regionSelect" class="form-label">지역 선택</label>-->
-<!--                <select id="regionSelect" class="form-select">-->
-<!--                    <option value="전체">전체</option>-->
-<!--                    <option th:each="region : ${regions}" th:value="${region}" th:text="${region}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
-
-        <!-- 지역 선택 필터 -->
-<!--        <div class="my-3">-->
-<!--            <h5>지역 선택</h5>-->
-<!--            <form th:action="@{/course/region/api/chart-data}" method="get" class="d-flex">-->
-<!--                <div class="btn-group" role="group">-->
-<!--                    <select id="sido" name="ctprvn" th:value="${ctprvn}">-->
-<!--                        <option value="">시도 선택</option>-->
-<!--                    </select>-->
-<!--                    <select id="sigugun" name="signgu" th:value="${signgu}">-->
-<!--                        <option value="">시군구 선택</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">검색</button>-->
-<!--            </form>-->
-<!--        </div>-->
+        <h1 class="text-center mb-4;" style="margin-top:10%;">지역별 스포츠 강좌 트렌드</h1>
         <div class="my-3">
             <h5>지역 선택</h5>
             <form id="regionForm" class="d-flex" onsubmit="return false;">
@@ -57,15 +30,15 @@
         </div>
 
         <!-- Heatmap Section -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title text-center">지역별 이용률 히트맵</h5>
-                <div class="heatmap">
-                    <!-- 히트맵을 여기에 추가하거나 지도로 대체 -->
-                    <img src="https://via.placeholder.com/800x400?text=Heatmap+Placeholder" class="img-fluid" alt="Heatmap">
-                </div>
-            </div>
-        </div>
+<!--        <div class="card mb-4">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title text-center">지역별 이용률 히트맵</h5>-->
+<!--                <div class="heatmap">-->
+<!--                    &lt;!&ndash; 히트맵을 여기에 추가하거나 지도로 대체 &ndash;&gt;-->
+<!--                    <img src="https://via.placeholder.com/800x400?text=Heatmap+Placeholder" class="img-fluid" alt="Heatmap">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -94,7 +67,7 @@
                         datasets: [{
                             label: '이용자 수',
                             data: data,
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            backgroundColor: labels.map(() => getRandomColor()),
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1
                         }]
@@ -140,6 +113,17 @@
 
                 console.log('fetched');
             }
+
+
+            // 랜덤 색상 생성기
+              function getRandomColor() {
+                const letters = "0123456789ABCDEF";
+                let color = "#";
+                for (let i = 0; i < 6; i++) {
+                  color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+              }
 
             // 행정구역 데이터 초기화
             hangjungdong.sido.forEach(item => {

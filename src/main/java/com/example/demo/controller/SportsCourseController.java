@@ -80,6 +80,10 @@ public class SportsCourseController {
         model.addAttribute("nextPageUrl", nextPageUrl);
         model.addAttribute("prevPageUrl", prevPageUrl);
 
+        model.addAttribute("sortType1", sortType1);
+        model.addAttribute("feature3","종목별 인기종목 도표로 보기");
+        model.addAttribute("feature4","계절별 인기종목 도표로 보기");
+        //model.addAttribute("keyword", keyword);
         return "course_trend";
     }
 
