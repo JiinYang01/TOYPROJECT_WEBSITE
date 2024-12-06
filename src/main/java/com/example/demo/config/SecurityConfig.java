@@ -33,7 +33,8 @@ public class SecurityConfig {
                 // URL별 접근 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user/login", "/user/register", "/css/**", "/js/**").permitAll() // 공개 경로
-                        .requestMatchers(HttpMethod.POST, "/reviews/**").authenticated() // POST 요청은 인증 필요
+                        .requestMatchers(HttpMethod.POST, "/reviews/**").authenticated()
+                        .requestMatchers("/surveypage").authenticated()// POST 요청은 인증 필요
                         .anyRequest().permitAll() // 나머지 요청은 모두 허용
                 )
 
