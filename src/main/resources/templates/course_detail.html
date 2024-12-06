@@ -1,35 +1,316 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" class="container my-3" style="margin-top: 800000px;">
-<!-- 강좌 상세 정보 페이지 -->
-<div class="container" style="padding-top:80px;">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row">
-                <!-- 강좌 이미지 또는 설명 공간 -->
-                <div class="col-md-6">
-                    <img th:src="${course.category.fileUrl}" class="img-fluid rounded" alt="강좌 이미지" style="width: 100%; max-height: 500px; object-fit: cover;">
+
+    <style>
+        /* 리뷰 등록 폼 스타일 */
+        .review-form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .review-form .form-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .review-form .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .review-form .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        .review-form button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .review-form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .review-form button[type="submit"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* 리뷰 등록 완료 메시지 스타일 */
+        .review-item {
+            margin-top: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .review-item .review-content {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .review-item .review-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .review-item .review-rating {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .review-summary {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+    </style>
+
+    <!-- 강좌 상세 정보 페이지 -->
+    <div class="container" style="padding-top:80px;">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <!-- 강좌 이미지 또는 설명 공간 -->
+                    <div class="col-md-6">
+                        <img th:src="${course.category.fileUrl}" class="img-fluid rounded" alt="강좌 이미지" style="width: 100%; max-height: 500px; object-fit: cover;">
+                    </div>
+                    <!-- 강좌 상세 정보 -->
+                    <div class="col-md-6">
+                        <h3 class="card-title mt-3" th:text="${course.courseNm}" style="text-align:center;">강좌명</h3><br><br>
+                        <ul class="list-group list-group-flush" style="font-size: 1.3rem; line-height: 1.5;">
+                            <li class="list-group-item"><strong>센터명:</strong> <span th:text="${course.fcltyName}">센터명</span></li>
+                            <li class="list-group-item"><strong>카테고리:</strong> <span th:text="${course.category.categoryName}">카테고리</span></li>
+                            <li class="list-group-item"><strong>주소:</strong> <span th:text="${course.fcltyDetailAddr}">주소</span></li>
+                            <li class="list-group-item"><strong>전화번호:</strong> <span th:text="${course.telNo}">전화번호</span></li>
+                            <li class="list-group-item"><strong>강좌 시작일:</strong> <span th:text="${course.courseBeginDe}">시작 날짜</span></li>
+                            <li class="list-group-item"><strong>강좌 종료일:</strong> <span th:text="${course.courseEndDe}">종료 날짜</span></li>
+                            <li class="list-group-item"><strong>인원수:</strong> <span th:text="${course.crseNum}">인원수</span>명</li>
+                            <li class="list-group-item"><strong>가격:</strong> <span th:text="${course.coursePrc}">가격</span>원</li>
+                        </ul>
+                    </div>
                 </div>
-                <!-- 강좌 상세 정보 -->
-                <div class="col-md-6">
-                    <h3 class="card-title mt-3" th:text="${course.courseNm}" style="text-align:center;">강좌명</h3><br><br>
-                    <ul class="list-group list-group-flush" style="font-size: 1.3rem; line-height: 1.5;">
-                        <li class="list-group-item"><strong>센터명:</strong> <span th:text="${course.fcltyName}">센터명</span></li>
-                        <li class="list-group-item"><strong>카테고리:</strong> <span th:text="${course.category.categoryName}">카테고리</span></li>
-                        <li class="list-group-item"><strong>주소:</strong> <span th:text="${course.fcltyDetailAddr}">주소</span></li>
-                        <li class="list-group-item"><strong>전화번호:</strong> <span th:text="${course.telNo}">전화번호</span></li>
-                        <li class="list-group-item"><strong>강좌 시작일:</strong> <span th:text="${course.courseBeginDe}">시작 날짜</span></li>
-                        <li class="list-group-item"><strong>강좌 종료일:</strong> <span th:text="${course.courseEndDe}">종료 날짜</span></li>
-                        <li class="list-group-item"><strong>인원수:</strong> <span th:text="${course.crseNum}">인원수</span>명</li>
-                        <li class="list-group-item"><strong>가격:</strong> <span th:text="${course.coursePrc}">가격</span>원</li>
-                    </ul>
+                <input type="hidden" id="courseId" th:value="${course.courseId}">
+                <div class="review-summary">
+                    <p id="averageRating">평균 별점: -</p>
+                    <p id="reviewCount">리뷰 수: -</p>
                 </div>
+                <!-- 리뷰 등록 폼 -->
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="reviewRating" class="form-label">평점</label>
+                        <select id="reviewRating" class="form-control">
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewContent" class="form-label">리뷰 내용</label>
+                        <textarea id="reviewContent" class="form-control" placeholder="리뷰를 작성해주세요" rows="4"></textarea>
+                    </div>
+                    <button id="reviewSubmitButton" type="submit" class="btn btn-primary" disabled>리뷰 등록</button>
+                </form>
+
+
+                <!-- 리뷰 목록 컨테이너 -->
+                <div id="reviews"></div>
+
             </div>
         </div>
-        <!-- 신청 버튼 -->
-<!--        <div class="card-footer text-center">-->
-<!--            <button class="btn btn-primary btn-lg" type="button">강좌 신청하기</button>-->
-<!--        </div>-->
     </div>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseId = document.getElementById('courseId').value;
+            const reviewsContainer = document.getElementById('reviews');
+            const reviewForm = document.getElementById('reviewForm');
+            const reviewSubmitButton = document.getElementById('reviewSubmitButton');
+
+            // 로그인 상태 확인
+            function checkLoginStatus() {
+                fetch('/user/check-login')
+                    .then(response => response.json())
+                    .then(isLoggedIn => {
+                        const textarea = reviewForm.querySelector('textarea');
+                        const select = reviewForm.querySelector('select');
+                        if (isLoggedIn) {
+                            textarea.disabled = false;
+                            select.disabled = false;
+                            reviewSubmitButton.disabled = false;
+                        } else {
+                            textarea.disabled = true;
+                            select.disabled = true;
+                            reviewSubmitButton.disabled = true;
+                            reviewSubmitButton.innerText = '로그인 후 작성 가능';
+                            reviewSubmitButton.classList.add('disabled');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('로그인 상태 확인 실패:', error);
+                        alert('로그인 상태를 확인하는 중 문제가 발생했습니다. 다시 시도해주세요.');
+                    });
+            }
+
+
+            // 리뷰 불러오기 함수 (이전 코드와 동일)
+<!--            function fetchReviews() {-->
+<!--                fetch(`/reviews/${courseId}`)-->
+<!--                    .then(response => response.json())-->
+<!--                    .then(reviews => {-->
+<!--                        reviewsContainer.innerHTML = '';-->
+<!--                        if (reviews.length === 0) {-->
+<!--                            reviewsContainer.innerHTML = '<p>아직 리뷰가 없습니다.</p>';-->
+<!--                            return;-->
+<!--                        }-->
+<!--                        reviews.forEach(review => {-->
+<!--                            const reviewElement = document.createElement('div');-->
+<!--                            reviewElement.classList.add('review-item');-->
+<!--                            reviewElement.innerHTML = `-->
+<!--                                <div class="review-content">${review.content}</div>-->
+<!--                                <div class="review-meta">-->
+<!--                                    <span class="review-rating">평점: ${review.rating || '없음'}</span>-->
+<!--                                    <span class="review-date">${review.createdDate || '날짜 없음'}</span>-->
+<!--                                </div>-->
+<!--                            `;-->
+<!--                            reviewsContainer.appendChild(reviewElement);-->
+<!--                        });-->
+<!--                    })-->
+<!--                    .catch(error => {-->
+<!--                        console.error('리뷰 불러오기 실패:', error);-->
+<!--                        reviewsContainer.innerHTML = '<p>리뷰를 불러오는 중 오류가 발생했습니다.</p>';-->
+<!--                    });-->
+<!--            }-->
+            function fetchReviews() {
+                fetch(`/reviews/${courseId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Fetched Data:', data); // 데이터 구조 확인
+                        const reviews = data.reviews; // Map에서 "reviews" 추출
+                        const averageRating = data.averageRating ? data.averageRating.toFixed(1) : "0.0"; // 평균 별점
+                        const reviewCount = data.reviewCount || 0; // 리뷰 수
+
+                        // 평균 별점 및 리뷰 수 업데이트
+                        document.getElementById('averageRating').innerText = `평균 별점: ${averageRating} / 5.0`;
+                        document.getElementById('reviewCount').innerText = `리뷰 수: ${reviewCount}`;
+
+                        // 리뷰 목록 표시
+                        reviewsContainer.innerHTML = '';
+                        if (!reviews || reviews.length === 0) {
+                            reviewsContainer.innerHTML = '<p>아직 리뷰가 없습니다.</p>';
+                            return;
+                        }
+                        reviews.forEach(review => {
+                            const reviewElement = document.createElement('div');
+                            reviewElement.classList.add('review-item');
+                            reviewElement.innerHTML = `
+                                <div class="review-content">${review.content}</div>
+                                <div class="review-meta">
+                                    <span class="review-rating">평점: ${review.rating || '없음'}</span>
+                                    <span class="review-date">${review.createdDate || '날짜 없음'}</span>
+                                </div>
+                            `;
+                            reviewsContainer.appendChild(reviewElement);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('리뷰 불러오기 실패:', error);
+                        reviewsContainer.innerHTML = '<p>리뷰를 불러오는 중 오류가 발생했습니다.</p>';
+                    });
+            }
+
+
+            // 리뷰 등록
+            reviewForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                fetch('/user/check-login')
+                    .then(response => response.json())
+                    .then(isLoggedIn => {
+                        if (!isLoggedIn) {
+                            alert('로그인이 필요합니다. 로그인 후 다시 시도해주세요.');
+                            window.location.href = '/login'; // 로그인 페이지로 리다이렉트
+                            return;
+                        }
+
+                        const content = document.getElementById('reviewContent').value.trim();
+                        const rating = document.getElementById('reviewRating').value;
+
+                        if (!content) {
+                            alert('리뷰 내용을 입력해주세요.');
+                            return;
+                        }
+
+                        const reviewData = {
+                            courseId: courseId,
+                            content: content,
+                            rating: rating
+                        };
+
+                        // 리뷰 등록 요청
+                        fetch('/reviews', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(reviewData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('리뷰 등록 실패');
+                            }
+                            return response.json();
+                        })
+                        .then(newReview => {
+                            fetchReviews(); // 등록 후 리뷰 목록 갱신
+                            reviewForm.reset();
+                            alert('리뷰가 성공적으로 등록되었습니다.');
+                        })
+                        .catch(error => {
+                            console.error('리뷰 등록 실패:', error);
+                            alert('리뷰 등록 중 오류가 발생했습니다.');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('로그인 상태 확인 실패:', error);
+                        alert('로그인 상태를 확인하는 중 문제가 발생했습니다. 다시 시도해주세요.');
+                    });
+            });
+
+
+            // 초기 로그인 상태 및 리뷰 확인
+            checkLoginStatus();
+            fetchReviews();
+        });
+    </script>
 </div>
 </html>
