@@ -4,12 +4,16 @@ import com.example.demo.DTO.LoginForm;
 import com.example.demo.DTO.UserCreateDTO;
 import com.example.demo.DTO.UserCreateForm;
 import com.example.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,9 +60,23 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage(Model model) {
+    public String showLoginPage(HttpServletRequest request, HttpServletResponse response, Model model) {
         model.addAttribute("loginForm", new LoginForm()); // LoginForm 객체를 모델에 추가
-        return "login"; // login.html 템플릿으로 이동
+
+        // 세션에서 이전 요청 정보 가져오기
+        SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+
+        if (savedRequest != null) {
+            request.getSession().setAttribute("prevPage", savedRequest.getRedirectUrl());
+        } else {
+            // 디버깅용: 어떤 요청이 오고 있는지 확인
+            String referer = request.getHeader("Referer");
+            if (referer != null) {
+                request.getSession().setAttribute("prevPage", referer);
+            }
+        }
+
+        return "login";
     }
 
     @ResponseBody
@@ -72,6 +90,18 @@ public class UserController {
                 && authentication.isAuthenticated();
 
         return ResponseEntity.ok(isLoggedIn);
+    }
+
+    @GetMapping("/login/success")
+    public String loginSuccess(HttpServletRequest request) {
+        String prevPage = (String) request.getSession().getAttribute("prevPage");
+
+        System.out.println("prevPage: " + prevPage);
+        if (prevPage != null) {
+            return "redirect:" + prevPage;
+        }
+
+        return "redirect:/";
     }
 
 }

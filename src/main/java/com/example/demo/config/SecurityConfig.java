@@ -39,9 +39,14 @@ public class SecurityConfig {
                 )
 
                 // 로그인 설정
+//                .formLogin(formLogin -> formLogin
+//                        .loginPage("/user/login") // 커스텀 로그인 페이지
+//                        .defaultSuccessUrl("/", true) // 로그인 성공 시 이동 경로
+//                        .permitAll()
+//                )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/user/login") // 커스텀 로그인 페이지
-                        .defaultSuccessUrl("/", true) // 로그인 성공 시 이동 경로
+                        .loginPage("/user/login")
+                        .defaultSuccessUrl("/user/login/success", true)
                         .permitAll()
                 )
 
