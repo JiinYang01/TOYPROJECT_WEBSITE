@@ -7,12 +7,13 @@ import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -58,6 +59,19 @@ public class UserController {
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new LoginForm()); // LoginForm 객체를 모델에 추가
         return "login"; // login.html 템플릿으로 이동
+    }
+
+    @ResponseBody
+    @GetMapping("/check-login")
+    public ResponseEntity<Boolean> checkLogin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 익명 사용자 또는 인증되지 않은 사용자 확인
+        boolean isLoggedIn = authentication != null
+                && !"anonymousUser".equals(authentication.getName())
+                && authentication.isAuthenticated();
+
+        return ResponseEntity.ok(isLoggedIn);
     }
 
 }

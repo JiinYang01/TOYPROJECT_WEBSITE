@@ -24,12 +24,142 @@
                     </ul>
                 </div>
             </div>
+<!--            <div id="reviews">-->
+<!--                <h3>리뷰</h3>-->
+<!--                <ul id="review-list">-->
+<!--                    &lt;!&ndash; 리뷰가 여기 표시됩니다 &ndash;&gt;-->
+<!--                </ul>-->
+<!--                <form id="review-form" th:data-course-id="${course.courseId}">-->
+<!--                    <textarea id="review-content" placeholder="리뷰를 입력하세요" required></textarea>-->
+<!--                    <input type="number" id="review-rating" min="1" max="5" placeholder="평점 (1~5)" required />-->
+<!--                    <button type="submit">리뷰 등록</button>-->
+<!--                </form>-->
+<!--            </div>-->
+            <!-- 숨겨진 courseId 입력 -->
+            <input type="hidden" id="courseId" th:value="${course.courseId}">
+
+            <!-- 리뷰 등록 폼 -->
+            <form id="reviewForm">
+                <select id="reviewRating">
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                </select>
+                <textarea id="reviewContent" placeholder="리뷰를 작성해주세요"></textarea>
+                <button id="reviewSubmitButton" type="submit" disabled>리뷰 등록</button>
+            </form>
+
+            <!-- 리뷰 목록 컨테이너 -->
+            <div id="reviews"></div>
+
         </div>
-        <!-- 신청 버튼 -->
-<!--        <div class="card-footer text-center">-->
-<!--            <button class="btn btn-primary btn-lg" type="button">강좌 신청하기</button>-->
-<!--        </div>-->
     </div>
 </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseId = document.getElementById('courseId').value;
+            const reviewsContainer = document.getElementById('reviews');
+            const reviewForm = document.getElementById('reviewForm');
+            const reviewSubmitButton = document.getElementById('reviewSubmitButton');
+
+            // 로그인 상태 확인
+            function checkLoginStatus() {
+                fetch('/user/check-login')
+                    .then(response => response.json())
+                    .then(isLoggedIn => {
+                        if (isLoggedIn) {
+                            reviewForm.querySelector('textarea').disabled = false;
+                            reviewForm.querySelector('select').disabled = false;
+                            reviewSubmitButton.disabled = false;
+                        } else {
+                            reviewForm.querySelector('textarea').disabled = true;
+                            reviewForm.querySelector('select').disabled = true;
+                            reviewSubmitButton.disabled = true;
+                            reviewSubmitButton.innerText = '로그인 후 작성 가능';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('로그인 상태 확인 실패:', error);
+                    });
+            }
+
+            // 리뷰 불러오기 함수 (이전 코드와 동일)
+            function fetchReviews() {
+                fetch(`/reviews/${courseId}`)
+                    .then(response => response.json())
+                    .then(reviews => {
+                        reviewsContainer.innerHTML = '';
+                        if (reviews.length === 0) {
+                            reviewsContainer.innerHTML = '<p>아직 리뷰가 없습니다.</p>';
+                            return;
+                        }
+                        reviews.forEach(review => {
+                            const reviewElement = document.createElement('div');
+                            reviewElement.classList.add('review-item');
+                            reviewElement.innerHTML = `
+                                <div class="review-content">${review.content}</div>
+                                <div class="review-meta">
+                                    <span class="review-rating">평점: ${review.rating || '없음'}</span>
+                                    <span class="review-date">${review.createdDate || '날짜 없음'}</span>
+                                </div>
+                            `;
+                            reviewsContainer.appendChild(reviewElement);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('리뷰 불러오기 실패:', error);
+                        reviewsContainer.innerHTML = '<p>리뷰를 불러오는 중 오류가 발생했습니다.</p>';
+                    });
+            }
+
+            // 리뷰 등록
+            reviewForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const content = document.getElementById('reviewContent').value;
+                const rating = document.getElementById('reviewRating').value;
+
+                if (!content.trim()) {
+                    alert('리뷰 내용을 입력해주세요.');
+                    return;
+                }
+
+                const reviewData = {
+                    courseId: courseId,
+                    content: content,
+                    rating: rating
+                };
+
+                fetch('/reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(reviewData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('리뷰 등록 실패');
+                    }
+                    return response.json();
+                })
+                .then(newReview => {
+                    fetchReviews();
+                    reviewForm.reset();
+                    alert('리뷰가 성공적으로 등록되었습니다.');
+                })
+                .catch(error => {
+                    console.error('리뷰 등록 실패:', error);
+                    alert('리뷰 등록 중 오류가 발생했습니다.');
+                });
+            });
+
+            // 초기 로그인 상태 및 리뷰 확인
+            checkLoginStatus();
+            fetchReviews();
+        });
+    </script>
 </div>
 </html>
