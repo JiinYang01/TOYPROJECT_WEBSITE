@@ -124,7 +124,7 @@ public class SportsCourseController {
                        @RequestParam(value = "size", defaultValue = "12") int size,
                        Model model) {
         {
-            Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.getFilteredCourses(categoryId, sortType1, ctprvn, signgu, page, size);
+            Page<DisabledSportsCourseDTO> disabledcoursePage = disabledcourseService.getFilteredCourses(categoryId, sortType, ctprvn, signgu, page, size);
             List<CategoryDTO> categoryList = categoryService.getList();
             String currentUrl = generateUrl1(sortType1, sortType, categoryId, ctprvn, signgu, page, size);
             String nextPageUrl = page < disabledcoursePage.getTotalPages() - 1 ? generateUrl1(sortType1, sortType, categoryId, ctprvn, signgu, page + 1, size) : null;
